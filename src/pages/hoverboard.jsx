@@ -3,6 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Physics, RigidBody } from '@react-three/rapier'
 import * as THREE from 'three'
+import Man from '../components/man'
 import { usePageTitle } from '../hooks/usePageTitle'
 
 function HoverboardWithHumanoid() {
@@ -41,35 +42,12 @@ function HoverboardWithHumanoid() {
       onCollisionEnter={handleCollisionEnter}
     >
       {/* Hoverboard geometry */}
-      <mesh castShadow receiveShadow position={[0, 0, 0]}>
+      <mesh castShadow receiveShadow position={[0, -1.475, 0]}>
         <boxGeometry args={[1.5, 0.05, 0.5]} />
         <meshStandardMaterial color='blue' />
       </mesh>
 
-      {/* Humanoid geometry (all part of the same RigidBody) */}
-      {/* Torso */}
-      <mesh castShadow receiveShadow position={[0, 1, 0]}>
-        <boxGeometry args={[0.5, 1, 0.3]} />
-        <meshStandardMaterial color='orange' />
-      </mesh>
-
-      {/* Head */}
-      <mesh castShadow receiveShadow position={[0, 1.8, 0]}>
-        <sphereGeometry args={[0.25, 16, 16]} />
-        <meshStandardMaterial color='pink' />
-      </mesh>
-
-      {/* Left Leg */}
-      <mesh castShadow receiveShadow position={[-0.15, 0.6, 0]}>
-        <boxGeometry args={[0.1, 0.8, 0.1]} />
-        <meshStandardMaterial color='gray' />
-      </mesh>
-
-      {/* Right Leg */}
-      <mesh castShadow receiveShadow position={[0.15, 0.6, 0]}>
-        <boxGeometry args={[0.1, 0.8, 0.1]} />
-        <meshStandardMaterial color='gray' />
-      </mesh>
+      <Man />
     </RigidBody>
   )
 }
