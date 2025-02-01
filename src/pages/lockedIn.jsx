@@ -4,7 +4,7 @@ import { usePageTitle } from '../hooks/usePageTitle'
 
 function Man() {
   return (
-    <group position={[0, -1, 0]}>
+    <group position={[0, -1.1, 0]}>
       {/* Head group (with eyes, mouth, hair) */}
       <group position={[0, 1.5, 0]}>
         {/* Main head */}
