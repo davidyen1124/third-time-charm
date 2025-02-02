@@ -8,7 +8,7 @@
 
 Behold, a 3D masterpiece where a pink humanoid is forever trapped in a cylindrical cage! Built with Three.js because apparently, 2D wasn't complicated enough. Watch in amazement as our blocky friend eternally rotates like a sad display item at a department store. Features include: anatomically questionable proportions, a hairstyle that defies gravity, and enough geometry to make Euclid proud.
 
-<img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/lockedin.png" width="400" alt="Pink Prisoner Preview" />
+<img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/locked-in.png" width="400" alt="Pink Prisoner Preview" />
 
 ### 🛹 The Physics-Defying Dude [@third-time-charm/hoverboard](https://davidyen1124.github.io/third-time-charm/hoverboard)
 
@@ -20,7 +20,7 @@ Meet our orange-bodied, pink-headed friend who's living his best life on a blue 
 
 Step right up to The Chromatic Gate, where gravity and reason have taken a coffee break and design rules are gleefully tossed aside. This riotous jumble of misaligned arches and clashing hues is not a masterpiece but rather an audacious prank on architecture—allegedly born in a sizzling Santa Barbara summer when a group of deliriously eccentric painters, soaking in sun and absurdity, accidentally spilled a bucket of genius onto a blank canvas, resulting in a carnival of chaos that's as useful as a chocolate teapot and as baffling as a squirrel on a jetpack, a fun fact that only adds to its legendary allure.
 
-<img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/chromaticgate.png" width="600" alt="Chromatic Gate Preview" />
+<img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/chromatic-gate.png" width="600" alt="Chromatic Gate Preview" />
 
 ### 🚗 The Physics-Challenged Cars [@third-time-charm/car-physics](https://davidyen1124.github.io/third-time-charm/car-physics)
 
@@ -28,7 +28,7 @@ Welcome to our very own demolition derby, where four colorful cars have decided 
 
 <img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/car-physics.png" width="600" alt="Car Physics Preview" />
 
-## �� Special Thanks To
+## 🙌 Special Thanks To
 
 - My therapist - For helping me cope with React's lifecycle methods
 - The random Stack Overflow answer from 2014 that somehow still works
