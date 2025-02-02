@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import LockedIn from './pages/lockedIn'
-import Hoverboard from './pages/hoverboard'
+import LockedIn from './pages/LockedIn'
+import Hoverboard from './pages/Hoverboard'
 import ChromaticGate from './pages/ChromaticGate'
 
 function App() {
