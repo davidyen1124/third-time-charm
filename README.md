@@ -16,6 +16,12 @@ Meet our orange-bodied, pink-headed friend who's living his best life on a blue 
 
 <img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/hoverboard.png" width="600" alt="Hoverboard Preview" />
 
+### 🌈 The Chromatic Gate [@third-time-charm/chromaticgate](https://davidyen1124.github.io/third-time-charm/chromaticgate)
+
+Step right up to The Chromatic Gate, where gravity and reason have taken a coffee break and design rules are gleefully tossed aside. This riotous jumble of misaligned arches and clashing hues is not a masterpiece but rather an audacious prank on architecture—allegedly born in a sizzling Santa Barbara summer when a group of deliriously eccentric painters, soaking in sun and absurdity, accidentally spilled a bucket of genius onto a blank canvas, resulting in a carnival of chaos that's as useful as a chocolate teapot and as baffling as a squirrel on a jetpack, a fun fact that only adds to its legendary allure.
+
+<img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/chromaticgate.png" width="600" alt="Chromatic Gate Preview" />
+
 ## 🙌 Special Thanks To
 
 - My therapist - For helping me cope with React's lifecycle methods

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import LockedIn from './pages/lockedIn'
 import Hoverboard from './pages/hoverboard'
+import ChromaticGate from './pages/ChromaticGate'
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
           <Routes>
             <Route path='/lockedin' element={<LockedIn />} />
             <Route path='/hoverboard' element={<Hoverboard />} />
+            <Route path='/chromatic-gate' element={<ChromaticGate />} />
           </Routes>
         </main>
       </div>
