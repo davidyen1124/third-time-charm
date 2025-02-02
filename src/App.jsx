@@ -3,6 +3,7 @@ import LockedIn from './pages/LockedIn'
 import Hoverboard from './pages/Hoverboard'
 import ChromaticGate from './pages/ChromaticGate'
 import CarPhysics from './pages/CarPhysics'
+import Duck from './pages/Duck'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path='/hoverboard' element={<Hoverboard />} />
             <Route path='/chromatic-gate' element={<ChromaticGate />} />
             <Route path='/car-physics' element={<CarPhysics />} />
+            <Route path='/duck' element={<Duck />} />
           </Routes>
         </main>
       </div>

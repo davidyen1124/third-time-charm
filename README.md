@@ -28,6 +28,12 @@ Welcome to our very own demolition derby, where four colorful cars have decided 
 
 <img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/car-physics.png" width="600" alt="Car Physics Preview" />
 
+### 🦆 The Rubber Duck Flotilla [@third-time-charm/duck](https://davidyen1124.github.io/third-time-charm/duck)
+
+Behold, the world's most overengineered rubber duck debugging session! Watch in amazement as an army of yellow debug companions bob peacefully on an infinite ocean, living their best digital lives. Each duck has mastered the art of perpetual motion, gently bouncing to an invisible rhythm that would make any physics engine proud. It's like a zen garden meets a bathtub, except we spent way too much time on the water shaders. Warning: May cause sudden urges to explain your code problems to inanimate objects.
+
+<img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/duck.png" width="600" alt="Duck Preview" />
+
 ## 🙌 Special Thanks To
 
 - My therapist - For helping me cope with React's lifecycle methods
