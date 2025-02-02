@@ -1,35 +1,31 @@
 import React, { useRef } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
-import { Physics, RigidBody } from '@react-three/rapier'
-import * as THREE from 'three'
+import { Physics, RigidBody, CuboidCollider } from '@react-three/rapier'
 import Man from '../components/man'
 import { usePageTitle } from '../hooks/usePageTitle'
 
 function HoverboardWithHumanoid() {
   const boardRef = useRef()
 
-  // Add a small random torque every frame.
-  useFrame(() => {
-    if (boardRef.current) {
-      const randomTorque = new THREE.Vector3(
-        (Math.random() - 0.5) * 0.1,
-        0,
-        (Math.random() - 0.5) * 0.1
-      )
-      boardRef.current.applyTorqueImpulse(randomTorque, true)
-    }
-  })
-
-  // Trigger an upward impulse whenever colliding with the ground.
   const handleCollisionEnter = (event) => {
-    // If the other body is the ground, bounce upward.
-    if (
-      event.other.rigidBodyObject?.userData?.name === 'ground' &&
-      boardRef.current
-    ) {
-      // Apply an upward impulse.
-      boardRef.current.applyImpulse({ x: 0, y: 2, z: 0 }, true)
+    if (!boardRef.current) return
+    if (event.other.rigidBodyObject?.userData?.name === 'ground') {
+      // Generate a random horizontal angle (0 to 2π)
+      const randomAngle = Math.random() * 2 * Math.PI
+
+      // Define the upward impulse and a horizontal impulse factor (adjust these as needed)
+      const upwardImpulse = 5
+      const horizontalImpulse = 2
+
+      // Compute a random horizontal impulse vector
+      const impulseVector = {
+        x: horizontalImpulse * Math.cos(randomAngle),
+        y: upwardImpulse,
+        z: horizontalImpulse * Math.sin(randomAngle)
+      }
+
+      boardRef.current.applyImpulse(impulseVector, true)
     }
   }
 
@@ -37,18 +33,75 @@ function HoverboardWithHumanoid() {
     <RigidBody
       ref={boardRef}
       type='dynamic'
-      position={[0, 1, 0]}
-      colliders='cuboid'
+      ccd={true}
+      position={[0, 5, 0]}
       onCollisionEnter={handleCollisionEnter}
     >
-      {/* Hoverboard geometry */}
+      {/* Hoverboard Mesh */}
       <mesh castShadow receiveShadow position={[0, -1.475, 0]}>
         <boxGeometry args={[1.5, 0.05, 0.5]} />
         <meshStandardMaterial color='blue' />
       </mesh>
 
+      {/* Man (visual only) */}
       <Man />
+
+      {/* Collider for the Hoverboard */}
+      <CuboidCollider args={[0.75, 0.025, 0.25]} position={[0, -1.475, 0]} />
+
+      {/* Additional Collider for the Man */}
+      <CuboidCollider args={[0.25, 1.075, 0.25]} position={[0, -0.1, 0]} />
     </RigidBody>
+  )
+}
+
+function InvisibleBoundary({ position, size }) {
+  const halfSize = [size[0] / 2, size[1] / 2, size[2] / 2]
+  return (
+    <RigidBody type='fixed' position={position}>
+      <CuboidCollider args={halfSize} />
+      <mesh>
+        <boxGeometry args={size} />
+        <meshBasicMaterial color='white' transparent opacity={0} />
+      </mesh>
+    </RigidBody>
+  )
+}
+
+function Boundaries() {
+  const groundY = -1
+  const ceilingY = 10
+  const wallHeight = ceilingY - groundY // 11
+  const wallCenterY = groundY + wallHeight / 2 // 4.5
+
+  return (
+    <>
+      {/* Left Wall */}
+      <InvisibleBoundary
+        position={[-10, wallCenterY, 0]}
+        size={[0.5, wallHeight, 20]}
+      />
+      {/* Right Wall */}
+      <InvisibleBoundary
+        position={[10, wallCenterY, 0]}
+        size={[0.5, wallHeight, 20]}
+      />
+      {/* Back Wall */}
+      <InvisibleBoundary
+        position={[0, wallCenterY, -10]}
+        size={[20, wallHeight, 0.5]}
+      />
+      {/* Front Wall */}
+      <InvisibleBoundary
+        position={[0, wallCenterY, 10]}
+        size={[20, wallHeight, 0.5]}
+      />
+      {/* Ceiling */}
+      <InvisibleBoundary
+        position={[0, ceilingY + 0.25, 0]}
+        size={[20, 0.5, 20]}
+      />
+    </>
   )
 }
 
@@ -70,17 +123,18 @@ function Scene() {
         {/* Ground plane (with userData) */}
         <RigidBody
           type='fixed'
-          colliders='cuboid'
           position={[0, -1, 0]}
           userData={{ name: 'ground' }}
         >
+          {/* Explicitly define the ground collider with half-extents */}
+          <CuboidCollider args={[10, 0.1, 10]} />
           <mesh receiveShadow>
             <boxGeometry args={[20, 0.2, 20]} />
             <meshStandardMaterial color='green' />
           </mesh>
         </RigidBody>
 
-        {/* Hoverboard + Humanoid as a single rigid body */}
+        <Boundaries />
         <HoverboardWithHumanoid />
       </Physics>
     </>
