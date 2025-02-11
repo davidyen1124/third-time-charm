@@ -34,6 +34,12 @@ Behold, the world's most overengineered rubber duck debugging session! Watch in 
 
 <img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/duck.png" width="600" alt="Duck Preview" />
 
+### 📸 The Spotlight Polaroids [@third-time-charm/polaroid](https://davidyen1124.github.io/third-time-charm/polaroid)
+
+"Hey, what if we made a photo gallery, but like, really extra?" - said someone who clearly had too much time and Three.js knowledge. Now your cursor moonlights as a dramatic spotlight operator in this ridiculously over-the-top presentation of... _checks notes_... five floating Polaroids. Yes, we turned the simple act of looking at photos into an avant-garde theater production where pictures play hide-and-seek with your mouse pointer. It's basically what happens when a developer watches too many crime noir films while coding. Pro tip: Try explaining to your boss why you spent three days making photos emerge from darkness instead of just using a normal image grid like a reasonable person. At least the shadows are pretty. Side note: This project was brought to you by our complete disregard for conventional UI/UX practices and an unhealthy obsession with making simple things unnecessarily complicated.
+
+<img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/polaroid.png" width="600" alt="Polaroid Preview" />
+
 ## 🙌 Special Thanks To
 
 - My therapist - For helping me cope with React's lifecycle methods
