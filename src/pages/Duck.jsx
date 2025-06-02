@@ -18,7 +18,7 @@ function DuckPrimitive({ position, floatOffset }) {
     'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb'
   )
 
-  const clonedScene = useMemo(() => scene.clone(), [])
+  const clonedScene = useMemo(() => scene.clone(), [scene])
   const heading = useMemo(() => Math.random() * Math.PI * 2, [])
 
   useFrame((state) => {
