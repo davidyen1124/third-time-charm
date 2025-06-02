@@ -5,6 +5,7 @@ import ChromaticGate from './pages/ChromaticGate'
 import CarPhysics from './pages/CarPhysics'
 import Duck from './pages/Duck'
 import Polaroid from './pages/Polaroid'
+import Conveyor from './pages/Conveyor'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path='/car-physics' element={<CarPhysics />} />
             <Route path='/duck' element={<Duck />} />
             <Route path='/polaroid' element={<Polaroid />} />
+            <Route path='/conveyor' element={<Conveyor />} />
           </Routes>
         </main>
       </div>
