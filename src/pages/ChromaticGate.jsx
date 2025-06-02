@@ -132,43 +132,37 @@ function Gate() {
     return geo
   }
 
+  const Arch = ({ color, index, total }) => {
+    // Reduced maximum height from 7 to 4
+    const archHeight = 4 - index * 0.5
+    // Create the geometry for this specific height
+    const geometry = useMemo(() => createArchGeometry(archHeight), [archHeight])
+
+    // Reduced gap between arches
+    const gap = 0.4
+    const xPos = -index * gap + (total * gap) / 2
+    const zPos = index * gap - (total * gap) / 2
+
+    return (
+      <mesh geometry={geometry} castShadow receiveShadow position={[xPos, 0, zPos]}>
+        <meshPhysicalMaterial
+          color={color}
+          metalness={0.85}
+          roughness={0.4}
+          reflectivity={0.8}
+          clearcoat={0.5}
+          clearcoatRoughness={0.2}
+        />
+      </mesh>
+    )
+  }
+
   return (
     // Position the whole group so its bottom sits on world y=-4.5 (where your plane is)
     <group position={[0, -4.5, 0]}>
-      {archColors.map((color, i) => {
-        // Reduced maximum height from 7 to 4
-        const archHeight = 4 - i * 0.5
-
-        // Create the geometry for this specific height
-        const geometry = useMemo(
-          () => createArchGeometry(archHeight),
-          [archHeight]
-        )
-
-        // Reduced gap between arches
-        const gap = 0.4
-        const xPos = -i * gap + (archColors.length * gap) / 2
-        const zPos = i * gap - (archColors.length * gap) / 2
-
-        return (
-          <mesh
-            key={i}
-            geometry={geometry}
-            castShadow
-            receiveShadow
-            position={[xPos, 0, zPos]}
-          >
-            <meshPhysicalMaterial
-              color={color}
-              metalness={0.85}
-              roughness={0.4}
-              reflectivity={0.8}
-              clearcoat={0.5}
-              clearcoatRoughness={0.2}
-            />
-          </mesh>
-        )
-      })}
+      {archColors.map((color, i) => (
+        <Arch key={i} color={color} index={i} total={archColors.length} />
+      ))}
     </group>
   )
 }
