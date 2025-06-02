@@ -40,6 +40,10 @@ Behold, the world's most overengineered rubber duck debugging session! Watch in 
 
 <img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/polaroid.png" width="600" alt="Polaroid Preview" />
 
+### 🛒 The Grocery Lane Conveyor [@third-time-charm/conveyor](https://davidyen1124.github.io/third-time-charm/conveyor)
+
+Why settle for boring groceries when you can watch colorful cubes glide toward an imaginary cashier? This endlessly looping belt pauses just long enough to pretend a barcode is getting scanned before hustling on to the next box. It's more fun than actually shopping, and nobody judges you for buying 37 boxes of cereal.
+
 ## 🙌 Special Thanks To
 
 - My therapist - For helping me cope with React's lifecycle methods
