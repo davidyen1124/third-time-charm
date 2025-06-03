@@ -9,17 +9,17 @@ import Conveyor from './pages/Conveyor'
 
 function App() {
   return (
-    <Router basename='/third-time-charm'>
-      <div className='flex flex-col min-h-screen'>
-        <main className='flex-grow'>
+    <Router basename="/third-time-charm">
+      <div className="flex flex-col min-h-screen">
+        <main className="flex-grow">
           <Routes>
-            <Route path='/lockedin' element={<LockedIn />} />
-            <Route path='/hoverboard' element={<Hoverboard />} />
-            <Route path='/chromatic-gate' element={<ChromaticGate />} />
-            <Route path='/car-physics' element={<CarPhysics />} />
-            <Route path='/duck' element={<Duck />} />
-            <Route path='/polaroid' element={<Polaroid />} />
-            <Route path='/conveyor' element={<Conveyor />} />
+            <Route path="/lockedin" element={<LockedIn />} />
+            <Route path="/hoverboard" element={<Hoverboard />} />
+            <Route path="/chromatic-gate" element={<ChromaticGate />} />
+            <Route path="/car-physics" element={<CarPhysics />} />
+            <Route path="/duck" element={<Duck />} />
+            <Route path="/polaroid" element={<Polaroid />} />
+            <Route path="/conveyor" element={<Conveyor />} />
           </Routes>
         </main>
       </div>
