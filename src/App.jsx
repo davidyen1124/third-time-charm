@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Index from './pages/Index'
 import LockedIn from './pages/LockedIn'
 import Hoverboard from './pages/Hoverboard'
 import ChromaticGate from './pages/ChromaticGate'
@@ -13,6 +14,7 @@ function App() {
       <div className="flex flex-col min-h-screen">
         <main className="flex-grow">
           <Routes>
+            <Route path="/" element={<Index />} />
             <Route path="/lockedin" element={<LockedIn />} />
             <Route path="/hoverboard" element={<Hoverboard />} />
             <Route path="/chromatic-gate" element={<ChromaticGate />} />
