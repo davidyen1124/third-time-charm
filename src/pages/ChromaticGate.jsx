@@ -1,4 +1,5 @@
 import { useMemo, useRef } from 'react'
+import PropTypes from 'prop-types'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Environment } from '@react-three/drei'
 import * as THREE from 'three'
@@ -155,6 +156,12 @@ function Gate() {
         />
       </mesh>
     )
+  }
+
+  Arch.propTypes = {
+    color: PropTypes.string.isRequired,
+    index: PropTypes.number.isRequired,
+    total: PropTypes.number.isRequired
   }
 
   return (

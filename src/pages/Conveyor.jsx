@@ -1,6 +1,7 @@
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, Html } from '@react-three/drei'
 import { useState, Suspense } from 'react'
+import PropTypes from 'prop-types'
 import { usePageTitle } from '../hooks/usePageTitle'
 
 function ScanLine({ dotted, running, sensorZ }) {
@@ -39,6 +40,12 @@ function ScanLine({ dotted, running, sensorZ }) {
   return <group>{segments}</group>
 }
 
+ScanLine.propTypes = {
+  dotted: PropTypes.bool.isRequired,
+  running: PropTypes.bool.isRequired,
+  sensorZ: PropTypes.number.isRequired
+}
+
 function Belt({ length = 20, width = 2 }) {
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
@@ -48,6 +55,11 @@ function Belt({ length = 20, width = 2 }) {
   )
 }
 
+Belt.propTypes = {
+  length: PropTypes.number,
+  width: PropTypes.number
+}
+
 function BoxItem({ position, color }) {
   return (
     <mesh position={position} castShadow>
@@ -55,6 +67,11 @@ function BoxItem({ position, color }) {
       <meshStandardMaterial color={color} />
     </mesh>
   )
+}
+
+BoxItem.propTypes = {
+  position: PropTypes.arrayOf(PropTypes.number).isRequired,
+  color: PropTypes.string.isRequired
 }
 
 function ConveyorScene() {
