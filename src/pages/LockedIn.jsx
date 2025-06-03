@@ -18,7 +18,7 @@ function LockedInCage() {
         return (
           <mesh key={i} position={[x, 0, z]} rotation={[0, angle, 0]}>
             <cylinderGeometry args={[0.05, 0.05, barHeight, 8]} />
-            <meshStandardMaterial color='gray' />
+            <meshStandardMaterial color="gray" />
           </mesh>
         )
       })}
@@ -28,7 +28,7 @@ function LockedInCage() {
         <cylinderGeometry
           args={[cageRadius + 0.05, cageRadius + 0.05, 0.1, 16, 1, false]}
         />
-        <meshStandardMaterial color='gray' />
+        <meshStandardMaterial color="gray" />
       </mesh>
 
       {/* Bottom Ring */}
@@ -36,7 +36,7 @@ function LockedInCage() {
         <cylinderGeometry
           args={[cageRadius + 0.05, cageRadius + 0.05, 0.1, 16, 1, false]}
         />
-        <meshStandardMaterial color='gray' />
+        <meshStandardMaterial color="gray" />
       </mesh>
     </group>
   )
@@ -46,7 +46,7 @@ export default function LockedIn() {
   usePageTitle('The Pink Prisoner')
 
   return (
-    <div className='w-full h-screen flex items-center justify-center bg-gray-900'>
+    <div className="w-full h-screen flex items-center justify-center bg-gray-900">
       <Canvas camera={{ position: [0, 2, 5], fov: 50 }}>
         <ambientLight intensity={0.4} />
         <directionalLight position={[5, 5, 5]} intensity={0.8} />
