@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import PropTypes from 'prop-types'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Physics, RigidBody, CuboidCollider } from '@react-three/rapier'
@@ -66,6 +67,11 @@ function InvisibleBoundary({ position, size }) {
       </mesh>
     </RigidBody>
   )
+}
+
+InvisibleBoundary.propTypes = {
+  position: PropTypes.arrayOf(PropTypes.number).isRequired,
+  size: PropTypes.arrayOf(PropTypes.number).isRequired
 }
 
 function Boundaries() {

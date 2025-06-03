@@ -1,4 +1,5 @@
 import { useRef, useMemo, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { Canvas, useFrame, extend } from '@react-three/fiber'
 import {
   OrbitControls,
@@ -28,6 +29,11 @@ function DuckPrimitive({ position, floatOffset }) {
   })
 
   return <primitive ref={group} object={clonedScene} position={position} />
+}
+
+DuckPrimitive.propTypes = {
+  position: PropTypes.arrayOf(PropTypes.number).isRequired,
+  floatOffset: PropTypes.number.isRequired
 }
 
 function Ocean() {

@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, SpotLight } from '@react-three/drei'
 import { Physics, RigidBody, CuboidCollider } from '@react-three/rapier'
@@ -55,6 +56,14 @@ function Car({ id, position, velocity, color, onRemoveCar }) {
       <CuboidCollider args={[1.5, 0.5, 1]} />
     </RigidBody>
   )
+}
+
+Car.propTypes = {
+  id: PropTypes.string.isRequired,
+  position: PropTypes.arrayOf(PropTypes.number).isRequired,
+  velocity: PropTypes.arrayOf(PropTypes.number).isRequired,
+  color: PropTypes.string.isRequired,
+  onRemoveCar: PropTypes.func.isRequired
 }
 
 function Ground() {
@@ -146,6 +155,10 @@ function Scene({ resetKey }) {
       <OrbitControls />
     </>
   )
+}
+
+Scene.propTypes = {
+  resetKey: PropTypes.number.isRequired
 }
 
 export default function CarPhysics() {
