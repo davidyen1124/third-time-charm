@@ -4,6 +4,10 @@
 
 ## 🎪 Welcome to the Circus
 
+### 🗂️ The Not-So-Grand Gallery [@third-time-charm/](https://davidyen1124.github.io/third-time-charm/)
+
+For those who want a guided tour of my questionable Three.js experiments, the gallery now whirls them around you in a flashy carousel. Because a plain grid was apparently too pedestrian.
+
 ### 🔒 The Pink Prisoner [@third-time-charm/lockedin](https://davidyen1124.github.io/third-time-charm/lockedin)
 
 Behold, a 3D masterpiece where a pink humanoid is forever trapped in a cylindrical cage! Built with Three.js because apparently, 2D wasn't complicated enough. Watch in amazement as our blocky friend eternally rotates like a sad display item at a department store. Features include: anatomically questionable proportions, a hairstyle that defies gravity, and enough geometry to make Euclid proud.
