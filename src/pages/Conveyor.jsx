@@ -176,9 +176,6 @@ export default function Conveyor() {
         </Suspense>
         <OrbitControls makeDefault />
       </Canvas>
-      <div className='absolute bottom-4 right-4 text-white/70 text-xs pointer-events-none'>
-        Click & drag to orbit
-      </div>
     </div>
   )
 }
