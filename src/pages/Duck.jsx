@@ -13,6 +13,32 @@ import { Water } from 'three/examples/jsm/objects/Water.js'
 
 extend({ Water })
 
+function TopHat() {
+  return (
+    <group position={[0, 1.3, 0]}>
+      {/* Brim of the hat */}
+      <mesh position={[0, -0.05, 0]}>
+        <cylinderGeometry args={[0.45, 0.45, 0.1, 32]} />
+        <meshStandardMaterial color='black' />
+      </mesh>
+      {/* Top of the hat */}
+      <mesh>
+        <cylinderGeometry args={[0.3, 0.3, 0.6, 32]} />
+        <meshStandardMaterial color='black' />
+      </mesh>
+    </group>
+  )
+}
+
+function Mustache() {
+  return (
+    <mesh position={[0, 0.2, 0.5]} rotation={[0, 0, Math.PI / 2]}>
+      <torusGeometry args={[0.25, 0.05, 16, 100, Math.PI]} />
+      <meshStandardMaterial color='brown' />
+    </mesh>
+  )
+}
+
 function DuckPrimitive({ position, floatOffset }) {
   const group = useRef()
   const { scene } = useGLTF(
@@ -28,7 +54,13 @@ function DuckPrimitive({ position, floatOffset }) {
     group.current.rotation.y = heading
   })
 
-  return <primitive ref={group} object={clonedScene} position={position} />
+  return (
+    <group ref={group} position={position}>
+      <primitive object={clonedScene} />
+      <TopHat />
+      <Mustache />
+    </group>
+  )
 }
 
 DuckPrimitive.propTypes = {
