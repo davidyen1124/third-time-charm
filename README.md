@@ -61,3 +61,4 @@ Why settle for boring groceries when you can watch colorful cubes glide toward a
 - My rubber duck - The only one who truly understands my code
 - ChatGPT - For writing commit messages that are funnier than my code
 - My coffee machine - The real senior developer on this project
+- Prettier went on a formatting spree across the demo pages, so now everything is perfectly aligned and mildly smug about it.

@@ -32,7 +32,7 @@ function PolaroidScene() {
     const bgGeometry = new THREE.PlaneGeometry(40, 40)
     const bgMaterial = new THREE.MeshPhongMaterial({
       color: 0x111111,
-      shininess: 0
+      shininess: 0,
     })
     const bgPlane = new THREE.Mesh(bgGeometry, bgMaterial)
     bgPlane.position.z = -2
@@ -105,7 +105,7 @@ function PolaroidScene() {
             borderHeight
           )
           const borderMaterial = new THREE.MeshPhongMaterial({
-            color: 0xffffff
+            color: 0xffffff,
           })
           const borderMesh = new THREE.Mesh(borderGeometry, borderMaterial)
           borderMesh.castShadow = true
@@ -115,7 +115,7 @@ function PolaroidScene() {
           // Create the photo
           const photoGeometry = new THREE.PlaneGeometry(photoWidth, photoHeight)
           const photoMaterial = new THREE.MeshPhongMaterial({
-            map: photoTexture
+            map: photoTexture,
           })
           const photoMesh = new THREE.Mesh(photoGeometry, photoMaterial)
           photoMesh.castShadow = true
@@ -204,7 +204,7 @@ function PolaroidScene() {
     }
   }, [])
 
-  return <div ref={containerRef} className='w-full h-screen overflow-hidden' />
+  return <div ref={containerRef} className="w-full h-screen overflow-hidden" />
 }
 
 export default PolaroidScene

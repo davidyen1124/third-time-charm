@@ -23,7 +23,7 @@ function HoverboardWithHumanoid() {
       const impulseVector = {
         x: horizontalImpulse * Math.cos(randomAngle),
         y: upwardImpulse,
-        z: horizontalImpulse * Math.sin(randomAngle)
+        z: horizontalImpulse * Math.sin(randomAngle),
       }
 
       boardRef.current.applyImpulse(impulseVector, true)
@@ -33,7 +33,7 @@ function HoverboardWithHumanoid() {
   return (
     <RigidBody
       ref={boardRef}
-      type='dynamic'
+      type="dynamic"
       ccd={true}
       position={[0, 5, 0]}
       onCollisionEnter={handleCollisionEnter}
@@ -41,7 +41,7 @@ function HoverboardWithHumanoid() {
       {/* Hoverboard Mesh */}
       <mesh castShadow receiveShadow position={[0, -1.475, 0]}>
         <boxGeometry args={[1.5, 0.05, 0.5]} />
-        <meshStandardMaterial color='blue' />
+        <meshStandardMaterial color="blue" />
       </mesh>
 
       {/* Man (visual only) */}
@@ -59,11 +59,11 @@ function HoverboardWithHumanoid() {
 function InvisibleBoundary({ position, size }) {
   const halfSize = [size[0] / 2, size[1] / 2, size[2] / 2]
   return (
-    <RigidBody type='fixed' position={position}>
+    <RigidBody type="fixed" position={position}>
       <CuboidCollider args={halfSize} />
       <mesh>
         <boxGeometry args={size} />
-        <meshBasicMaterial color='white' transparent opacity={0} />
+        <meshBasicMaterial color="white" transparent opacity={0} />
       </mesh>
     </RigidBody>
   )
@@ -71,7 +71,7 @@ function InvisibleBoundary({ position, size }) {
 
 InvisibleBoundary.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number).isRequired,
-  size: PropTypes.arrayOf(PropTypes.number).isRequired
+  size: PropTypes.arrayOf(PropTypes.number).isRequired,
 }
 
 function Boundaries() {
@@ -128,7 +128,7 @@ function Scene() {
       <Physics gravity={[0, -9.81, 0]}>
         {/* Ground plane (with userData) */}
         <RigidBody
-          type='fixed'
+          type="fixed"
           position={[0, -1, 0]}
           userData={{ name: 'ground' }}
         >
@@ -136,7 +136,7 @@ function Scene() {
           <CuboidCollider args={[10, 0.1, 10]} />
           <mesh receiveShadow>
             <boxGeometry args={[20, 0.2, 20]} />
-            <meshStandardMaterial color='green' />
+            <meshStandardMaterial color="green" />
           </mesh>
         </RigidBody>
 
@@ -151,7 +151,7 @@ export default function Hoverboard() {
   usePageTitle('The Physics-Defying Dude')
 
   return (
-    <div className='w-full h-screen bg-black text-white'>
+    <div className="w-full h-screen bg-black text-white">
       <Canvas shadows camera={{ position: [0, 15, 20], fov: 55 }}>
         <Scene />
       </Canvas>

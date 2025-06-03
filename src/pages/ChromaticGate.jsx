@@ -11,7 +11,7 @@ const archColors = [
   '#FFED00', // Yellow
   '#008542', // Green
   '#1548C0', // Blue
-  '#721C8D' // Purple
+  '#721C8D', // Purple
 ]
 
 function createGrassTexture() {
@@ -118,7 +118,7 @@ function Gate() {
       bevelEnabled: true,
       bevelThickness: 0.05,
       bevelSize: 0.02,
-      bevelSegments: 2
+      bevelSegments: 2,
     }
 
     // Create the extruded geometry
@@ -145,7 +145,12 @@ function Gate() {
     const zPos = index * gap - (total * gap) / 2
 
     return (
-      <mesh geometry={geometry} castShadow receiveShadow position={[xPos, 0, zPos]}>
+      <mesh
+        geometry={geometry}
+        castShadow
+        receiveShadow
+        position={[xPos, 0, zPos]}
+      >
         <meshPhysicalMaterial
           color={color}
           metalness={0.85}
@@ -161,7 +166,7 @@ function Gate() {
   Arch.propTypes = {
     color: PropTypes.string.isRequired,
     index: PropTypes.number.isRequired,
-    total: PropTypes.number.isRequired
+    total: PropTypes.number.isRequired,
   }
 
   return (
@@ -179,17 +184,17 @@ export default function ChromaticGate() {
   const grassTexture = useMemo(() => createGrassTexture(), [])
 
   return (
-    <div className='w-full h-screen bg-black text-white'>
+    <div className="w-full h-screen bg-black text-white">
       <Canvas
         camera={{ position: [0, 3, 15], fov: 75 }}
         shadows
         gl={{
           physicallyCorrectLights: true,
           toneMapping: THREE.ACESFilmicToneMapping,
-          outputEncoding: THREE.sRGBEncoding
+          outputEncoding: THREE.sRGBEncoding,
         }}
       >
-        <color attach='background' args={['#87CEEB']} />
+        <color attach="background" args={['#87CEEB']} />
         <ambientLight intensity={0.2} />
         <MovingSun />
         <mesh
@@ -202,7 +207,7 @@ export default function ChromaticGate() {
           <meshStandardMaterial map={grassTexture} />
         </mesh>
         <Gate />
-        <Environment preset='sunset' />
+        <Environment preset="sunset" />
         <OrbitControls minPolarAngle={0} maxPolarAngle={Math.PI / 2} />
       </Canvas>
     </div>

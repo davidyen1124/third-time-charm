@@ -43,21 +43,21 @@ function ScanLine({ dotted, running, sensorZ }) {
 ScanLine.propTypes = {
   dotted: PropTypes.bool.isRequired,
   running: PropTypes.bool.isRequired,
-  sensorZ: PropTypes.number.isRequired
+  sensorZ: PropTypes.number.isRequired,
 }
 
 function Belt({ length = 20, width = 2 }) {
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
       <planeGeometry args={[length, width]} />
-      <meshStandardMaterial color='#111' />
+      <meshStandardMaterial color="#111" />
     </mesh>
   )
 }
 
 Belt.propTypes = {
   length: PropTypes.number,
-  width: PropTypes.number
+  width: PropTypes.number,
 }
 
 function BoxItem({ position, color, dims }) {
@@ -72,7 +72,7 @@ function BoxItem({ position, color, dims }) {
 BoxItem.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number).isRequired,
   color: PropTypes.string.isRequired,
-  dims: PropTypes.arrayOf(PropTypes.number).isRequired
+  dims: PropTypes.arrayOf(PropTypes.number).isRequired,
 }
 
 function ConveyorScene() {
@@ -84,7 +84,7 @@ function ConveyorScene() {
     return [
       min + Math.random() * (max - min),
       min + Math.random() * (max - min),
-      min + Math.random() * (max - min)
+      min + Math.random() * (max - min),
     ]
   }
 
@@ -98,7 +98,7 @@ function ConveyorScene() {
         id: i,
         z,
         color: `hsl(${Math.random() * 360},70%,60%)`,
-        dims: randomDims()
+        dims: randomDims(),
       })
       z -= randomGap()
     }
@@ -132,8 +132,8 @@ function ConveyorScene() {
             id: crypto.randomUUID(),
             z,
             color: `hsl(${Math.random() * 360},70%,60%)`,
-            dims: randomDims()
-          }
+            dims: randomDims(),
+          },
         ]
       })
     }
@@ -154,8 +154,8 @@ function ConveyorScene() {
         />
       ))}
       <Html position={[0, 1.4, 0]} transform occlude>
-        <div className='rounded-2xl shadow-lg backdrop-blur bg-white/80 px-4 py-2'>
-          <p className='text-xs font-semibold text-gray-800'>
+        <div className="rounded-2xl shadow-lg backdrop-blur bg-white/80 px-4 py-2">
+          <p className="text-xs font-semibold text-gray-800">
             {running ? 'Belt running …' : 'Scanning item …'}
           </p>
         </div>
@@ -167,7 +167,7 @@ function ConveyorScene() {
 export default function Conveyor() {
   usePageTitle('The Grocery Conveyor')
   return (
-    <div className='h-screen w-full bg-gray-900 grid place-items-center'>
+    <div className="h-screen w-full bg-gray-900 grid place-items-center">
       <Canvas shadows camera={{ position: [4, 4.5, 6], fov: 45 }}>
         <ambientLight intensity={0.4} />
         <directionalLight position={[5, 8, 5]} intensity={1.2} castShadow />

@@ -15,7 +15,7 @@ const colorPalette = [
   '#8B00FF',
   '#FFC0CB',
   '#FF1493',
-  '#FFD700'
+  '#FFD700',
 ]
 
 function getRandomColor() {
@@ -34,7 +34,7 @@ function Car({ id, position, velocity, color, onRemoveCar }) {
     friction: 0.9,
     restitution: 0.3,
     linearVelocity: velocity,
-    angularDamping: 0.3
+    angularDamping: 0.3,
   }
 
   // remove the car if it travels too far away
@@ -63,15 +63,15 @@ Car.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number).isRequired,
   velocity: PropTypes.arrayOf(PropTypes.number).isRequired,
   color: PropTypes.string.isRequired,
-  onRemoveCar: PropTypes.func.isRequired
+  onRemoveCar: PropTypes.func.isRequired,
 }
 
 function Ground() {
   return (
-    <RigidBody type='fixed' friction={0.9} restitution={0}>
+    <RigidBody type="fixed" friction={0.9} restitution={0}>
       <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[50, 50]} />
-        <meshStandardMaterial color='#228B22' />
+        <meshStandardMaterial color="#228B22" />
       </mesh>
       <CuboidCollider args={[25, 0.1, 25]} />
     </RigidBody>
@@ -81,20 +81,20 @@ function Ground() {
 const initialCarsData = [
   {
     position: [25, 0.5, 25],
-    velocity: [-50, 0, -50]
+    velocity: [-50, 0, -50],
   },
   {
     position: [-25, 0.5, 25],
-    velocity: [50, 0, -50]
+    velocity: [50, 0, -50],
   },
   {
     position: [25, 0.5, -25],
-    velocity: [-50, 0, 50]
+    velocity: [-50, 0, 50],
   },
   {
     position: [-25, 0.5, -25],
-    velocity: [50, 0, 50]
-  }
+    velocity: [50, 0, 50],
+  },
 ]
 
 function Scene({ resetKey }) {
@@ -107,7 +107,7 @@ function Scene({ resetKey }) {
         id: Math.random().toString(36).substring(2),
         position: data.position,
         velocity: data.velocity,
-        color: getRandomColor()
+        color: getRandomColor(),
       }
     })
     setCars(newCars)
@@ -158,7 +158,7 @@ function Scene({ resetKey }) {
 }
 
 Scene.propTypes = {
-  resetKey: PropTypes.number.isRequired
+  resetKey: PropTypes.number.isRequired,
 }
 
 export default function CarPhysics() {
@@ -169,7 +169,7 @@ export default function CarPhysics() {
   }
 
   return (
-    <div className='w-full h-screen bg-gray-300' onClick={handleClick}>
+    <div className="w-full h-screen bg-gray-300" onClick={handleClick}>
       <Canvas
         shadows
         camera={{ position: [60, 60, 60], fov: 50 }}
