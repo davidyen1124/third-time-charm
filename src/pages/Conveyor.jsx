@@ -60,10 +60,10 @@ Belt.propTypes = {
   width: PropTypes.number
 }
 
-function BoxItem({ position, color }) {
+function BoxItem({ position, color, dims }) {
   return (
     <mesh position={position} castShadow>
-      <boxGeometry args={[0.6, 0.6, 0.6]} />
+      <boxGeometry args={dims} />
       <meshStandardMaterial color={color} />
     </mesh>
   )
@@ -71,19 +71,39 @@ function BoxItem({ position, color }) {
 
 BoxItem.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number).isRequired,
-  color: PropTypes.string.isRequired
+  color: PropTypes.string.isRequired,
+  dims: PropTypes.arrayOf(PropTypes.number).isRequired
 }
 
 function ConveyorScene() {
   const showLine = true
   const dottedLine = false
-  const [items, setItems] = useState(() =>
-    Array.from({ length: 6 }, (_, i) => ({
-      id: i,
-      z: -10 - i * 2,
-      color: `hsl(${Math.random() * 360},70%,60%)`
-    }))
-  )
+  const randomDims = () => {
+    const min = 0.4
+    const max = 0.8
+    return [
+      min + Math.random() * (max - min),
+      min + Math.random() * (max - min),
+      min + Math.random() * (max - min)
+    ]
+  }
+
+  const randomGap = () => 1.5 + Math.random() * 1.5
+
+  const [items, setItems] = useState(() => {
+    const initial = []
+    let z = -10
+    for (let i = 0; i < 6; i++) {
+      initial.push({
+        id: i,
+        z,
+        color: `hsl(${Math.random() * 360},70%,60%)`,
+        dims: randomDims()
+      })
+      z -= randomGap()
+    }
+    return initial
+  })
   const [running, setRunning] = useState(true)
 
   const speed = 0.045
@@ -103,10 +123,19 @@ function ConveyorScene() {
       }
     })
     if (items.length < 6) {
-      setItems((prev) => [
-        ...prev,
-        { id: crypto.randomUUID(), z: spawnZ, color: `hsl(${Math.random() * 360},70%,60%)` }
-      ])
+      setItems((prev) => {
+        const minZ = prev.reduce((m, it) => Math.min(m, it.z), spawnZ)
+        const z = Math.min(spawnZ, minZ - randomGap())
+        return [
+          ...prev,
+          {
+            id: crypto.randomUUID(),
+            z,
+            color: `hsl(${Math.random() * 360},70%,60%)`,
+            dims: randomDims()
+          }
+        ]
+      })
     }
   })
 
@@ -117,7 +146,12 @@ function ConveyorScene() {
         <ScanLine dotted={dottedLine} running={running} sensorZ={sensorZ} />
       )}
       {items.map((it) => (
-        <BoxItem key={it.id} position={[0, 0.31, it.z]} color={it.color} />
+        <BoxItem
+          key={it.id}
+          position={[0, 0.31, it.z]}
+          color={it.color}
+          dims={it.dims}
+        />
       ))}
       <Html position={[0, 1.4, 0]} transform occlude>
         <div className='rounded-2xl shadow-lg backdrop-blur bg-white/80 px-4 py-2'>
