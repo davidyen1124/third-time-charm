@@ -6,35 +6,18 @@ import {
   useGLTF,
   Environment,
   Sky,
-  useTexture
+  useTexture,
 } from '@react-three/drei'
 import * as THREE from 'three'
 import { Water } from 'three/examples/jsm/objects/Water.js'
 
 extend({ Water })
 
-function TopHat() {
-  return (
-    <group position={[0, 1.3, 0]}>
-      {/* Brim of the hat */}
-      <mesh position={[0, -0.05, 0]}>
-        <cylinderGeometry args={[0.45, 0.45, 0.1, 32]} />
-        <meshStandardMaterial color='black' />
-      </mesh>
-      {/* Top of the hat */}
-      <mesh>
-        <cylinderGeometry args={[0.3, 0.3, 0.6, 32]} />
-        <meshStandardMaterial color='black' />
-      </mesh>
-    </group>
-  )
-}
-
 function Mustache() {
   return (
     <mesh position={[0, 0.2, 0.5]} rotation={[0, 0, Math.PI / 2]}>
       <torusGeometry args={[0.25, 0.05, 16, 100, Math.PI]} />
-      <meshStandardMaterial color='brown' />
+      <meshStandardMaterial color="brown" />
     </mesh>
   )
 }
@@ -57,7 +40,6 @@ function DuckPrimitive({ position, floatOffset }) {
   return (
     <group ref={group} position={position}>
       <primitive object={clonedScene} />
-      <TopHat />
       <Mustache />
     </group>
   )
@@ -65,7 +47,7 @@ function DuckPrimitive({ position, floatOffset }) {
 
 DuckPrimitive.propTypes = {
   position: PropTypes.arrayOf(PropTypes.number).isRequired,
-  floatOffset: PropTypes.number.isRequired
+  floatOffset: PropTypes.number.isRequired,
 }
 
 function Ocean() {
@@ -100,8 +82,8 @@ function Ocean() {
           sunColor: 0xffffff,
           waterColor: 0x001e0f,
           distortionScale: 1.5,
-          fog: true
-        }
+          fog: true,
+        },
       ]}
     />
   )
@@ -116,7 +98,7 @@ function Scene() {
       for (let j = -gridSize; j <= gridSize; j += spacing) {
         positions.push({
           position: [i, 0, j],
-          floatOffset: Math.random() * 100
+          floatOffset: Math.random() * 100,
         })
       }
     }
@@ -125,7 +107,7 @@ function Scene() {
 
   return (
     <>
-      <Environment preset='city' />
+      <Environment preset="city" />
       <Sky sunPosition={[100, 20, 100]} />
 
       <ambientLight intensity={0.4} />
@@ -145,7 +127,7 @@ function Scene() {
 
 export default function Duck() {
   return (
-    <div className='w-full h-screen'>
+    <div className="w-full h-screen">
       <Canvas camera={{ position: [0, 10, 25], fov: 70 }}>
         <Scene />
       </Canvas>
