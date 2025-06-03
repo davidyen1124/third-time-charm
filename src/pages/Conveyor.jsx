@@ -3,6 +3,42 @@ import { OrbitControls, Html } from '@react-three/drei'
 import { useState, Suspense } from 'react'
 import { usePageTitle } from '../hooks/usePageTitle'
 
+function ScanLine({ dotted, running, sensorZ }) {
+  const color = '#000000'
+  const emissive = running ? '#ff0000' : '#00ff00'
+  if (!dotted) {
+    return (
+      <mesh position={[0, 0.2, sensorZ]}>
+        <boxGeometry args={[2.1, 0.02, 0.02]} />
+        <meshStandardMaterial
+          emissive={emissive}
+          emissiveIntensity={5}
+          color={color}
+        />
+      </mesh>
+    )
+  }
+  const segmentCount = 8
+  const segmentWidth = 2.1 / segmentCount
+  const gapRatio = 0.5
+  const boxWidth = segmentWidth * (1 - gapRatio)
+  const segments = []
+  for (let i = 0; i < segmentCount; i++) {
+    const x = -1.05 + segmentWidth * i + boxWidth / 2
+    segments.push(
+      <mesh key={i} position={[x, 0.2, sensorZ]}>
+        <boxGeometry args={[boxWidth, 0.02, 0.02]} />
+        <meshStandardMaterial
+          emissive={emissive}
+          emissiveIntensity={5}
+          color={color}
+        />
+      </mesh>
+    )
+  }
+  return <group>{segments}</group>
+}
+
 function Belt({ length = 20, width = 2 }) {
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
@@ -22,6 +58,8 @@ function BoxItem({ position, color }) {
 }
 
 function ConveyorScene() {
+  const showLine = true
+  const dottedLine = false
   const [items, setItems] = useState(() =>
     Array.from({ length: 6 }, (_, i) => ({
       id: i,
@@ -58,14 +96,9 @@ function ConveyorScene() {
   return (
     <>
       <Belt />
-      <mesh position={[0, 0.2, sensorZ]}>
-        <boxGeometry args={[2.1, 0.02, 0.02]} />
-        <meshStandardMaterial
-          emissive={running ? '#ff0000' : '#00ff00'}
-          emissiveIntensity={5}
-          color='#000000'
-        />
-      </mesh>
+      {showLine && (
+        <ScanLine dotted={dottedLine} running={running} sensorZ={sensorZ} />
+      )}
       {items.map((it) => (
         <BoxItem key={it.id} position={[0, 0.31, it.z]} color={it.color} />
       ))}
