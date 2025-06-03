@@ -5,41 +5,44 @@ import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
+// 👇 local copies of the screenshots
+import lockedIn from '../../.github/assets/screenshots/locked-in.png'
+import hoverboard from '../../.github/assets/screenshots/hoverboard.png'
+import chromaticGate from '../../.github/assets/screenshots/chromatic-gate.png'
+import carPhysics from '../../.github/assets/screenshots/car-physics.png'
+import duck from '../../.github/assets/screenshots/duck.png'
+import polaroid from '../../.github/assets/screenshots/polaroid.png'
+
 const demos = [
   {
     path: '/lockedin',
     name: 'The Pink Prisoner',
-    img: 'https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/locked-in.png',
+    img: lockedIn,
   },
   {
     path: '/hoverboard',
     name: 'The Physics-Defying Dude',
-    img: 'https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/hoverboard.png',
+    img: hoverboard,
   },
   {
     path: '/chromatic-gate',
     name: 'The Chromatic Gate',
-    img: 'https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/chromatic-gate.png',
+    img: chromaticGate,
   },
   {
     path: '/car-physics',
     name: 'The Physics-Challenged Cars',
-    img: 'https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/car-physics.png',
+    img: carPhysics,
   },
   {
     path: '/duck',
     name: 'The Rubber Duck Flotilla',
-    img: 'https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/duck.png',
+    img: duck,
   },
   {
     path: '/polaroid',
     name: 'The Spotlight Polaroids',
-    img: 'https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/polaroid.png',
-  },
-  {
-    path: '/conveyor',
-    name: 'The Grocery Lane Conveyor',
-    img: 'https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/conveyor.png',
+    img: polaroid,
   },
 ]
 

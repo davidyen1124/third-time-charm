@@ -8,6 +8,10 @@
 
 For those who want a guided tour of my questionable Three.js experiments, the gallery now whirls them around you in a flashy carousel. Because a plain grid was apparently too pedestrian.
 
+By the way, the thumbnails now come from local files, because waiting on GitHub to deliver them felt slower than my Monday brain.
+Now they're stashed in `.github/assets` because even images need their own secret clubhouse.
+The conveyor screenshot is on an extended coffee break, so the carousel is short one picture for now.
+
 ### 🔒 The Pink Prisoner [@third-time-charm/lockedin](https://davidyen1124.github.io/third-time-charm/lockedin)
 
 Behold, a 3D masterpiece where a pink humanoid is forever trapped in a cylindrical cage! Built with Three.js because apparently, 2D wasn't complicated enough. Watch in amazement as our blocky friend eternally rotates like a sad display item at a department store. Features include: anatomically questionable proportions, a hairstyle that defies gravity, and enough geometry to make Euclid proud.
