@@ -191,7 +191,7 @@ export default function ChromaticGate() {
         gl={{
           physicallyCorrectLights: true,
           toneMapping: THREE.ACESFilmicToneMapping,
-          outputEncoding: THREE.sRGBEncoding,
+          outputColorSpace: THREE.SRGBColorSpace,
         }}
       >
         <color attach="background" args={['#87CEEB']} />
