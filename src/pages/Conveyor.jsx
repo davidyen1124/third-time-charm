@@ -49,7 +49,7 @@ ScanLine.propTypes = {
 function Belt({ length = 20, width = 2 }) {
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-      <planeGeometry args={[length, width]} />
+      <planeGeometry args={[width, length]} />
       <meshStandardMaterial color="#111" />
     </mesh>
   )
