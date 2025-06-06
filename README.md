@@ -53,6 +53,9 @@ And because no debugging session is complete without a little class, each duck n
 
 Why settle for boring groceries when you can watch colorful cubes glide toward an imaginary cashier? This endlessly looping belt pauses just long enough to pretend a barcode is getting scanned before hustling on to the next box. It's more fun than actually shopping, and nobody judges you for buying 37 boxes of cereal.
 The black belt finally figured out which way to face, so the boxes aren't moonwalking anymore. Progress!
+Turns out length belongs on Z, so the cubes can strut forward like runway models instead of sideways figure skaters.
+
+<img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/conveyor.png" width="600" alt="Conveyor Preview" />
 
 ## 🙌 Special Thanks To
 
