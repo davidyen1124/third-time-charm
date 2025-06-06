@@ -30,6 +30,8 @@ Step right up to The Chromatic Gate, where gravity and reason have taken a coffe
 
 <img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/chromatic-gate.png" width="600" alt="Chromatic Gate Preview" />
 
+Now powered by `SRGBColorSpace` because `sRGBEncoding` finally retired. Progress?
+
 ### 🚗 The Physics-Challenged Cars [@third-time-charm/car-physics](https://davidyen1124.github.io/third-time-charm/car-physics)
 
 Welcome to our very own demolition derby, where four colorful cars have decided that Newton's laws are more like "suggestions." Watch as these rainbow-hued boxes of chaos launch themselves from the corners of our green stage, determined to recreate a particle collision experiment that would make CERN scientists scratch their heads. Each reset brings a fresh palette of colors because if you're going to break the laws of physics, you might as well do it in style. Click anywhere to restart the mayhem when the cars inevitably yeet themselves into the void. Warning: No actual cars were harmed in the making of this demo, but several physics textbooks filed formal complaints.
