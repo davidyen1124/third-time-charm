@@ -10,7 +10,7 @@ For those who want a guided tour of my questionable Three.js experiments, the ga
 
 By the way, the thumbnails now come from local files, because waiting on GitHub to deliver them felt slower than my Monday brain.
 Now they're stashed in `.github/assets` because even images need their own secret clubhouse.
-The conveyor screenshot is on an extended coffee break, so the carousel is short one picture for now.
+The conveyor screenshot finally clocked in, so the carousel is now a full house.
 
 ### 🔒 The Pink Prisoner [@third-time-charm/lockedin](https://davidyen1124.github.io/third-time-charm/lockedin)
 
@@ -68,3 +68,4 @@ Turns out length belongs on Z, so the cubes can strut forward like runway models
 - ChatGPT - For writing commit messages that are funnier than my code
 - My coffee machine - The real senior developer on this project
 - Prettier went on a formatting spree across the demo pages, so now everything is perfectly aligned and mildly smug about it.
+- The conveyor screenshot finally rolled onto the homepage, so the carousel doesn't look like it's missing a tooth anymore.

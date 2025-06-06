@@ -1,5 +1,5 @@
 import { Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls, Html, Text } from '@react-three/drei'
+import { OrbitControls, Html } from '@react-three/drei'
 import { useState, Suspense, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { usePageTitle } from '../hooks/usePageTitle'

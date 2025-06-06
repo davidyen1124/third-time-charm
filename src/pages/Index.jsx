@@ -12,6 +12,7 @@ import chromaticGate from '../../.github/assets/screenshots/chromatic-gate.png'
 import carPhysics from '../../.github/assets/screenshots/car-physics.png'
 import duck from '../../.github/assets/screenshots/duck.png'
 import polaroid from '../../.github/assets/screenshots/polaroid.png'
+import conveyor from '../../.github/assets/screenshots/conveyor.png'
 
 const demos = [
   {
@@ -43,6 +44,11 @@ const demos = [
     path: '/polaroid',
     name: 'The Spotlight Polaroids',
     img: polaroid,
+  },
+  {
+    path: '/conveyor',
+    name: 'The Grocery Lane Conveyor',
+    img: conveyor,
   },
 ]
 
