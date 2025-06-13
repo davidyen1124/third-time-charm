@@ -50,6 +50,10 @@ const demos = [
     name: 'The Grocery Lane Conveyor',
     img: conveyor,
   },
+  {
+    path: '/flight-simulator',
+    name: 'The Realistic Flight Simulator',
+  },
 ]
 
 function Carousel({ items }) {

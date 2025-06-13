@@ -59,6 +59,10 @@ Turns out length belongs on Z, so the cubes can strut forward like runway models
 
 <img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/conveyor.png" width="600" alt="Conveyor Preview" />
 
+### ✈️ The Realistic Flight Simulator [@third-time-charm/flight-simulator](https://davidyen1124.github.io/third-time-charm/flight-simulator)
+
+Because nothing screams "realism" like a plane constructed from three boxes and a dream. Watch it circle endlessly, ignoring all known aerodynamics, while you contemplate your life choices.
+
 ## 🙌 Special Thanks To
 
 - My therapist - For helping me cope with React's lifecycle methods
@@ -69,3 +73,4 @@ Turns out length belongs on Z, so the cubes can strut forward like runway models
 - My coffee machine - The real senior developer on this project
 - Prettier went on a formatting spree across the demo pages, so now everything is perfectly aligned and mildly smug about it.
 - The conveyor screenshot finally rolled onto the homepage, so the carousel doesn't look like it's missing a tooth anymore.
+- The flight simulator is buzzing around without a screenshot, proving anything can fly with enough JavaScript and imagination.
