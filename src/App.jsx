@@ -7,6 +7,8 @@ import CarPhysics from './pages/CarPhysics'
 import Duck from './pages/Duck'
 import Polaroid from './pages/Polaroid'
 import Conveyor from './pages/Conveyor'
+import Marshaller from './pages/Marshaller'
+import FlightSimulator from './pages/FlightSimulator'
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
             <Route path="/duck" element={<Duck />} />
             <Route path="/polaroid" element={<Polaroid />} />
             <Route path="/conveyor" element={<Conveyor />} />
+            <Route path="/flight-simulator" element={<FlightSimulator />} />
+            <Route path="/marshaller" element={<Marshaller />} />
           </Routes>
         </main>
       </div>

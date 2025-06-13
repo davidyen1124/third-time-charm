@@ -1,5 +1,5 @@
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Image, OrbitControls } from '@react-three/drei'
+import { Image, OrbitControls, Html } from '@react-three/drei'
 import { usePageTitle } from '../hooks/usePageTitle'
 import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -50,6 +50,14 @@ const demos = [
     name: 'The Grocery Lane Conveyor',
     img: conveyor,
   },
+  {
+    path: '/flight-simulator',
+    name: 'The Realistic Flight Simulator',
+  },
+  {
+    path: '/marshaller',
+    name: 'The Runway Maestro',
+  },
 ]
 
 function Carousel({ items }) {
@@ -64,15 +72,34 @@ function Carousel({ items }) {
     <group ref={group}>
       {items.map((demo, i) => {
         const angle = (i / items.length) * Math.PI * 2
+        const pos = [Math.sin(angle) * radius, 0, Math.cos(angle) * radius]
+        const rot = [0, angle + Math.PI, 0]
+        if (demo.img) {
+          return (
+            <Image
+              key={demo.path}
+              url={demo.img}
+              position={pos}
+              scale={[2.4, 1.6, 1]}
+              rotation={rot}
+              onClick={() => navigate(demo.path)}
+            />
+          )
+        }
         return (
-          <Image
+          <mesh
             key={demo.path}
-            url={demo.img}
-            position={[Math.sin(angle) * radius, 0, Math.cos(angle) * radius]}
+            position={pos}
+            rotation={rot}
             scale={[2.4, 1.6, 1]}
-            rotation={[0, angle + Math.PI, 0]}
             onClick={() => navigate(demo.path)}
-          />
+          >
+            <planeGeometry args={[1, 1]} />
+            <meshStandardMaterial color="gray" />
+            <Html center>
+              <div className="text-white text-xs">{demo.name}</div>
+            </Html>
+          </mesh>
         )
       })}
     </group>
