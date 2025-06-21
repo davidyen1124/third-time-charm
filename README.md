@@ -59,13 +59,6 @@ Turns out length belongs on Z, so the cubes can strut forward like runway models
 
 <img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/conveyor.png" width="600" alt="Conveyor Preview" />
 
-### ✈️ The Runway Maestro [@third-time-charm/marshaller](https://davidyen1124.github.io/third-time-charm/marshaller)
-
-Because nothing says "professional" like a pixelated dude enthusiastically waving glow sticks at invisible airplanes. He keeps signaling, even though no planes ever listen. Safety regulations probably weren't consulted. The screenshot union refused to work overtime, so you'll just have to imagine the dazzling moves.
-
-### 🛫 The Realistic Flight Simulator [@third-time-charm/flight-simulator](https://davidyen1124.github.io/third-time-charm/flight-simulator)
-
-Introducing the world's finest paper airplane technology. Marvel as a blocky cone soars through the digital skies with all the grace of a toddler's arts-and-crafts project. If this is realism, birds everywhere are offended.
 
 ## 🙌 Special Thanks To
 
