@@ -7,6 +7,7 @@ import CarPhysics from './pages/CarPhysics'
 import Duck from './pages/Duck'
 import Polaroid from './pages/Polaroid'
 import Conveyor from './pages/Conveyor'
+import Techmap from './pages/Techmap'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/duck" element={<Duck />} />
             <Route path="/polaroid" element={<Polaroid />} />
             <Route path="/conveyor" element={<Conveyor />} />
+            <Route path="/techmap" element={<Techmap />} />
           </Routes>
         </main>
       </div>

@@ -59,6 +59,11 @@ Turns out length belongs on Z, so the cubes can strut forward like runway models
 
 <img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/conveyor.png" width="600" alt="Conveyor Preview" />
 
+### 🌌 The Tech Company Constellation [@third-time-charm/techmap](https://davidyen1124.github.io/third-time-charm/techmap)
+
+Welcome to Silicon Valley in space! This interactive 3D constellation maps over 1,700 tech companies as glowing spheres floating through the digital cosmos. Each company displays its actual logo (when it loads) and is positioned based on when it was founded - newer companies orbit closer to the center while the old-timers drift toward the edges. Hover over any sphere to see company details, and watch as they progressively load in batches like stars appearing at dusk. It's basically LinkedIn but with more physics and fewer spam connection requests. Built with real company data and a healthy disrespect for traditional data visualization methods.
+
+<img src="https://github.com/davidyen1124/third-time-charm/raw/main/.github/assets/screenshots/techmap.png" width="600" alt="Techmap Preview" />
 
 ## 🙌 Special Thanks To
 

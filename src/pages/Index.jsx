@@ -13,7 +13,7 @@ import carPhysics from '../../.github/assets/screenshots/car-physics.png'
 import duck from '../../.github/assets/screenshots/duck.png'
 import polaroid from '../../.github/assets/screenshots/polaroid.png'
 import conveyor from '../../.github/assets/screenshots/conveyor.png'
-// no screenshot yet for the flight simulator, imagination required
+import techmap from '../../.github/assets/screenshots/techmap.png'
 
 const demos = [
   {
@@ -50,6 +50,11 @@ const demos = [
     path: '/conveyor',
     name: 'The Grocery Lane Conveyor',
     img: conveyor,
+  },
+  {
+    path: '/techmap',
+    name: 'The Tech Company Constellation',
+    img: techmap,
   },
 ]
 
