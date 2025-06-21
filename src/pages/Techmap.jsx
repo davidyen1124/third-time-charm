@@ -500,12 +500,17 @@ export default function Techmap() {
   }
 
   return (
-    <div className="h-screen w-full relative overflow-hidden">
+    <div className="h-screen w-full relative overflow-hidden select-none">
       <Canvas
         camera={{ position: [0, 0, 80], fov: 45 }}
         style={{
           background:
             'radial-gradient(ellipse at center, #1e293b 0%, #0f1419 100%)',
+          touchAction: 'none',
+          userSelect: 'none',
+          WebkitUserSelect: 'none',
+          MozUserSelect: 'none',
+          msUserSelect: 'none',
         }}
         dpr={[1, 2]}
         performance={{ min: 0.5 }}
