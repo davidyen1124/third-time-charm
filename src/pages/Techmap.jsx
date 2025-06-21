@@ -326,17 +326,31 @@ function Tooltip({ company, position }) {
         zIndex: 1000,
       }}
     >
-      <div className="bg-slate-900/95 backdrop-blur-sm border border-slate-700 rounded-lg p-3 max-w-xs shadow-2xl">
-        <div className="text-white font-medium text-sm">{company.name}</div>
-        <div className="text-slate-300 text-xs mt-1 line-clamp-2">
-          {company.description}
-        </div>
-        {company.employees && (
-          <div className="text-slate-400 text-xs mt-1">
-            {company.employees} employees
+      <div className="animate-in fade-in-0 zoom-in-95 duration-200">
+        <div className="bg-black/80 backdrop-blur border border-gray-600 rounded-lg p-3 w-64 shadow-2xl">
+          <div className="text-white font-semibold text-base mb-2">{company.name}</div>
+          
+          <div 
+            className="text-xs font-medium px-2 py-1 rounded mb-3 inline-block"
+            style={{ 
+              backgroundColor: company.color,
+              color: 'white'
+            }}
+          >
+            {company.constellation.name}
           </div>
-        )}
-        <div className="text-slate-400 text-xs">Founded {company.founded}</div>
+          
+          <div className="text-gray-300 text-sm mb-3 leading-relaxed">
+            {company.description}
+          </div>
+          
+          <div className="text-gray-400 text-sm">
+            {company.employees && (
+              <div className="mb-1">{company.employees} employees</div>
+            )}
+            <div>Founded {company.founded}</div>
+          </div>
+        </div>
       </div>
     </Html>
   )
