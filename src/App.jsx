@@ -11,7 +11,7 @@ import Techmap from './pages/Techmap'
 
 function App() {
   return (
-    <Router basename="/third-time-charm">
+    <Router basename="/car-physics">
       <div className="flex flex-col min-h-screen">
         <main className="flex-grow">
           <Routes>
