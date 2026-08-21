@@ -4,6 +4,9 @@
 
 ## 🎪 Welcome to the Circus
 
+The gallery used to yeet clicks to `github.io/lockedin` (and the rest of the demo roster) like the site lived at the domain root. Those are very confident 404s. It now remembers the `/third-time-charm` prefix, like a tourist who finally learned the hotel address.
+
+
 ### 🗂️ The Not-So-Grand Gallery [@third-time-charm/](https://davidyen1124.github.io/third-time-charm/)
 
 For those who want a guided tour of my questionable Three.js experiments, the gallery now whirls them around you in a flashy carousel. Because a plain grid was apparently too pedestrian.

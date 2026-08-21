@@ -308,7 +308,8 @@ function Carousel({ items }) {
   }, [])
 
   const handleItemClick = useCallback((path) => {
-    setTimeout(() => window.open(path, '_blank'), 100)
+    const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+    setTimeout(() => window.open(`${base}${path}`, '_blank'), 100)
   }, [])
 
   const radius = 4
