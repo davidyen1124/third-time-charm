@@ -1,82 +1,58 @@
-# Daylight Museum — implementation QA
+# Daylight Museum — visual and interaction QA
 
-**final result: blocked**
+**final result: passed**
 
-A Chromium WebGL 2 run now renders the museum successfully. The first GPU comparison found floor reflection artifacts, an obstructed car inspection camera, an overly distant overview, and mobile controls covering the artwork. Fixes are implemented and awaiting a second rendered comparison. The release remains blocked until that comparison and the complete browser checks pass.
+The release candidate passed all four Chromium WebGL browser groups and nine Three.js scene tests. The selected concept and final overview were opened together at matching dimensions; the five fidelity surfaces and all eight inspection states were reviewed. No actionable P0/P1/P2 issue remains. The P3 label refinement below is non-blocking.
 
-## WebGL QA iteration — 5 September 2026
+## Evidence
 
-- Chromium 134 / ANGLE SwiftShader, 1487 × 1058 CSS pixels and screenshot pixels, device scale 1. The selected reference is also 1487 × 1058; both were opened together for comparison.
-- Evidence: [browser run 33986571221](https://github.com/davidyen1124/third-time-charm/actions/runs/33986571221), artifact `museum-qa-33986571221`, including `desktop-overview.png`, eight inspection views, and 393-pixel mobile views.
-- The run passed actual WebGL rendering, all eight local thumbnails, local fonts, the collection dialog, seven artwork control checks, orbit navigation, and the absence of application/shader errors.
-- Car collision feedback timed out at 20 seconds on the software renderer; physics now integrates delayed frames in bounded small steps. A regression check verifies collisions at four frames per second.
-- The car camera was hidden by the cage. The car and hoverboard displays have been repositioned and their inspection cameras moved into clear sight lines.
-- Black blocks appeared in the reflective floor. The reflection now uses a simpler blur without the depth-dependent pass or bump derivative, and the reflection/shadow resolutions are reduced.
-- The room was framed too far away. The overview camera is closer and lower; the catalogue thumbnails and rows now better match the reference proportions. These are proposed fixes, not yet visually approved.
-- Mobile inspection controls obscured the artwork. They now flow below the canvas with no nested scrolling. Selection scrolls the artwork into view. The All works button now has a stable accessible name that excludes its decorative count.
-- Escape now returns to the gallery even when a control has keyboard focus.
-- Browser QA now captures High-quality overview evidence, checks artwork controls in Standard mode, retains progress on failure, waits longer for navigation on the software renderer, and verifies the loaded entry module against the production build.
+- Source visual truth: `docs/daylight-museum-reference.webp`, the selected Daylight Museum concept, 1487 × 1058 pixels.
+- Release candidate: `5b731eed0a6dee5a955ea70521e37b6d1fc572c0`.
+- Browser: Chromium 134, ANGLE / SwiftShader, WebGL 2. Desktop viewport and full-view capture: 1487 × 1058, device scale factor 1. Source and implementation require no density scaling.
+- Desktop overview evidence: `docs/qa/museum-desktop.webp`. State: `/third-time-charm/`, gallery overview, Chromatic Gate caption, High detail.
+- Mobile: 393 × 852 CSS pixels, scale factor 1, touch enabled, Standard detail. Full-page inspection capture: `docs/qa/museum-mobile.webp`, 393 × 1226 pixels. The complete collection can scroll to its final artwork; see `docs/qa/museum-mobile-collection.webp`, 393 × 971 pixels.
+- Full browser screenshots and JSON reports: [release QA run](https://github.com/davidyen1124/third-time-charm/actions/runs/33988893463). Each of the four artifacts contains its tested commit, build entry module, graphics renderer, assertions, and console findings.
+- Original PNG captures are retained in the workflow artifacts. Repository evidence uses WebP compression at the original pixel dimensions; no cropping, retouching, or density resizing is applied.
 
-The earlier cloud-browser findings below are retained as history; WebGL availability itself is no longer the blocker.
+## Findings and comparison history
 
-## Evidence and comparison state
-
-- Source visual truth: `docs/daylight-museum-reference.webp`, the user's selected first concept, 1487 × 1058 pixels.
-- Initial browser screenshot: `docs/qa/daylight-museum-webgl-blocked.jpg`.
-- Revised browser screenshot: `docs/qa/daylight-museum-webgl-blocked-final.jpg`.
-- Collection dialog: `docs/qa/daylight-museum-all-works.jpg`.
-- Browser viewport: 1363 × 936 CSS pixels, device pixel ratio 1. Screenshots are 1363 × 936 pixels.
-- Implementation route: `/third-time-charm/`; gallery overview, Chromatic Gate selected. The scene is in its WebGL-unavailable state. The source represents a successfully rendered scene, so they are different states.
-- The source and initial implementation were opened in the same comparison input. The revised implementation was captured after the readable-fallback fix. No density scaling was required for the browser. Source and implementation have different viewport dimensions; no pixel-perfect or scene-fidelity conclusion is made.
-- Focused scene comparisons were not possible because the renderer is unavailable. The visible HTML header, caption, catalogue, and collection dialog were inspected.
-
-## Findings
-
-### P0 — The browser cannot render the core 3D experience
-
-The reference shows the complete sunlit room, real material reflections, shadows, and all eight exhibits. The available browser reports `GL_VENDOR=Disabled`, `GL_RENDERER=Disabled`, and failure to create a WebGL context. The original upstream demo failed in the same browser before implementation. The capability check now reports WebGL 2 unavailable and preserves the HTML collection.
-
-**Required follow-up:** Run this branch in a browser with WebGL 2 enabled. Capture the overview and all eight inspection states; verify shader compilation, reflections, light exposure, camera occlusion, touch controls, and frame rate. Compare the rendered room to the selected reference at matching viewport dimensions, correct differences, and repeat visual QA before release.
-
-### P2 — Low-contrast fallback caption (fixed)
-
-The initial screenshot showed a white, shadowed caption on the empty pale error background. `.renderer-unavailable .museum-caption` now uses the dark ink token and no text shadow, and the inactive orbit hint is hidden. The revised screenshot confirms the fix. It does not establish scene rendering success.
-
-### P2 — Root navigation lost its trailing slash (fixed)
-
-Refreshing the gallery after navigation exposed Vite's base-path notice. The router now uses `import.meta.env.BASE_URL` including its trailing slash. Browser checks confirmed artwork selection and return-to-gallery both retain `/third-time-charm/`.
+1. **WebGL unavailable in the original cloud browser — resolved for QA.** The original upstream demo also failed there. The application now offers a readable fallback, and a separate Chromium runner provides actual WebGL evidence. Passing scene tests alone were not treated as rendering proof.
+2. **[P1] Black floor reflection artifacts — fixed.** The first real render (`33986571221`) showed black blocks across the floor. Removing the depth-dependent reflection pass and floor bump derivative eliminated them in the revised High-detail overview. Reflection and shadow resolutions were reduced to lower rendering cost.
+3. **[P1] Obstructed car camera and [P2] hoverboard framing — fixed.** The cage hid the car track; a pillar intruded into the hoverboard view. Repositioned displays and closer inspection cameras now expose the complete objects. Revised browser evidence shows four visible cars, working collision feedback, and a clear hoverboard inspection view.
+4. **[P2] Distant overview and catalogue proportions — fixed.** A closer, lower camera restores the sculpture-led composition. Larger thumbnail cells and row spacing bring the catalogue close to the reference proportions. The final canvas is 782 pixels high versus approximately 774 in the concept; the small difference accommodates the functional footer and rendering-detail selector.
+5. **[P2] Mobile controls covered the artwork — fixed.** Inspection controls now flow below the canvas. Selection scrolls the artwork into view. The final mobile capture shows an unobstructed constellation and its complete controls. A rear plant that covered part of this exhibit has been removed.
+6. **[P2] Text contrast over ceiling rails — fixed.** A light header scrim protects the dark serif title; a restrained lower scrim supports the white caption. The artwork remains visible beneath both, and neither intercepts pointer events.
+7. **Interaction regressions — fixed.** Delayed-frame car physics now advances through bounded substeps; collision tests pass at four frames per second. Escape returns to the gallery even with a control focused. The mobile All works button has a stable accessible name. Explicit rotation controls work with reduced-motion preferences, while automatic constellation motion starts paused for those users.
+8. **QA harness timing — corrected.** Canvas selection successfully changed the scene, but an immediate URL assertion ran before React committed the route. The test now waits for the selected route before checking it. This retains the direct canvas-pointer assertion.
 
 ## Required fidelity surfaces
 
-| Surface                  | Assessment                                                                                                                                                                                                                                                                                            |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Typography               | Local Libre Caslon Display loads successfully. The large dark serif brand, small subtitle, serif captions, and numbered catalogue follow the concept. Physical 3D labels and exact line breaks need a working renderer.                                                                               |
-| Spacing and layout       | Desktop header and 2 × 4 catalogue are visible with no horizontal overflow at 1363 pixels. The complete collection fits in its modal. Scene composition and mobile layouts remain unverified.                                                                                                         |
-| Colors and tokens        | The HTML shell follows the warm ivory, dark ink, and muted red selection palette. The error-state caption is readable after the fix. Sunlight, stone, metal, and water appearance remain unverified.                                                                                                  |
-| Image quality and assets | All eight local thumbnails load. They are the original repository screenshots rather than fictional renders from the concept; this preserves each original experiment's identity. Generated material textures and the real duck GLB are local assets. Their rendered appearance needs GPU validation. |
-| Copy and content         | The title, subtitle, selected-work caption, and complete eight-work collection follow the selected direction. Every artwork has specific instructions and controls, with an original-demo link. The unavailable state explains why the scene cannot open.                                             |
+| Surface                  | Assessment                                                                                                                                                                                                                                                                                                                                                                    |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Fonts and typography     | Local Caslon display type and Georgia body copy preserve the concept's serif hierarchy. The brand weight, catalogue sizes, line breaks, and control text were reviewed at full resolution. Desktop and mobile text remains readable without horizontal clipping.                                                                                                              |
+| Spacing and layout       | The full-view comparison preserves the large museum scene above a complete two-row catalogue. Inspection cameras keep each exhibit visible. Mobile uses two catalogue columns and a separate control panel below the scene. The collection dialog scrolls to all eight works.                                                                                                 |
+| Colors and tokens        | Warm ivory, limestone, dark ink, and muted red selection accents follow the concept. Lit materials, floor reflection, shadows, panel contrast, and selected states were inspected. Standard mode intentionally omits the planar floor reflection.                                                                                                                             |
+| Image quality and assets | The scene contains actual Three.js geometry, local surface textures, a duck GLB, HDR lighting, and photographic prints. Original repository thumbnails preserve the identities of the existing experiments. Accepted adaptations include simpler real-time geometry, tabletop cars, the local beach photograph, and company name labels instead of the concept's brand marks. |
+| Copy and content         | All eight named works appear in the catalogue and collection dialog. Each has specific instructions, functioning controls, feedback where relevant, and an original-experiment link. Company search uses the 149 entries actually present in the repository.                                                                                                                  |
 
-## Verification
+The source is an illustrative concept rather than a supplied 3D scene. Its material depth and layout guide the implementation; the accepted asset and geometry adaptations above retain the requested interactive collection. The concept provides no inspection or mobile screen, so those states were assessed for readability, access, and consistency with the desktop design. Close inspection views provide the focused artwork and control review; additional UI crops are unnecessary because the supplied 1:1 captures make the text and controls legible.
 
-- `npm run format`: run as required by `AGENTS.md`; unrelated legacy formatting changes were removed from the implementation diff.
-- `npm run lint`: passed with zero errors and warnings.
-- `npm run build`: passed. Vite warns about large Three.js and legacy Rapier chunks; legacy experiments are lazy loaded.
-- `npm test`: 9 tests passed, covering collection registration plus cage opening and waving, hoverboard leaning and kickflips, gate spreading and rotation, car collision/bounds/reset behavior, water ripples and duck hops, photograph selection, conveyor scanning/pause, and company selection/search representation.
-- Scene tests use the actual Three.js object graph and frame callbacks. Network assets, text rendering, and the duck model are mocked. They do not verify GPU shaders, rendered lighting, pointer raycasting in the browser, or frame rate.
-- Browser: catalogue selections reached the respective artwork panels; all eight works were marked explored during the navigation run. The collection modal exposes all eight cards and supports dismissal. Thumbnail loading, display font loading, root path preservation, and the readable WebGL failure state were checked.
-- Console checked: the blocking error is WebGL context creation in the cloud browser. No successful 3D render was observed. No console-clean claim is made for the unrendered scene.
+## Verification scope
 
-## Comparison history
+- `npm run format` and `npm run lint` pass; unrelated legacy formatting changes were removed.
+- Production build passes. Vite reports large Three.js and legacy Rapier chunks; original experiments are lazy loaded.
+- Nine scene tests pass. They exercise the real Three.js object graph and frame callbacks, with assets and text mocked, including the delayed-frame collision regression.
+- Browser checks cover all eight artwork control flows, complete collection access, direct canvas selection, orbit and zoom, keyboard dismissal/focus, mobile touch navigation, search, thumbnail/font loading, quality changes, refresh, and base-path preservation.
+- WebGL reports no graphics error. Completed browser parts report no application, shader, or asset-request errors. SwiftShader emits a `ReadPixels` performance warning; it is recorded rather than classified as an application error.
+- The browser checks the served entry module against the production build, including during the post-deployment run.
+- These checks establish Chromium desktop and mobile-viewport behavior. They do not establish physical-phone frame rate, Safari compatibility, or rendered behavior of every legacy experiment; original links are checked for their correct routes.
 
-1. Source and initial browser capture inspected together. Core room absent because WebGL is disabled; fallback caption contrast was poor.
-2. Added a capability check and explicit retry/failure UI instead of an indefinite loading state. Updated error-state caption colors and hid unusable orbit instructions. Revised browser capture confirms readable fallback.
-3. Fixed the root route trailing slash discovered during reload and confirmed navigation retains the configured base path.
-4. Core visual review remains blocked. Browser UI checks and passing scene behavior tests do not replace it.
+## Follow-up polish
 
-## Remaining implementation checklist
+- [P3] Several secondary company labels can overlap while the constellation rotates. The selected company's full name and description remain readable in the controls; labels could be limited to the selection in a later refinement.
 
-1. Open in a WebGL 2 capable browser and complete the full-view reference comparison.
-2. Exercise every pointer and keyboard action in all eight inspection states; check return navigation and the complete collection.
-3. Verify narrow layouts and touch interactions on a phone, plus the Standard quality mode.
-4. Tune any visible materials, light exposure, occlusion, scaling, and thumbnail crops from actual captures.
-5. Mark this report passed only after the remaining scene and responsive visual checks pass.
+## Release checklist
+
+- [x] Final four-part browser suite passes on the release candidate (24 assertions across the four groups, including repeated renderer/asset/error checks).
+- [x] Final source/overview comparison and mobile sight-line review are recorded. The final comparison shows the reflection, camera, typography, catalogue, and mobile fixes in place.
+- [ ] Merge the reviewed implementation, wait for GitHub Pages, and run the same checks against the deployed build. Deployment evidence is recorded in the PR and the automatically triggered workflow; this report approves the pre-merge implementation.
