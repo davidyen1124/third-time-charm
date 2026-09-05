@@ -9,9 +9,15 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright')
 const baseURL =
   process.env.MUSEUM_QA_URL || 'http://127.0.0.1:4173/third-time-charm/'
 const output = process.env.MUSEUM_QA_OUTPUT || 'museum-qa-results'
+const part = process.env.MUSEUM_QA_PART || 'all'
+assert(
+  ['all', 'gallery', 'sculptures', 'installations', 'mobile'].includes(part)
+)
+const includesPart = (name) => part === 'all' || part === name
 await fs.mkdir(output, { recursive: true })
 const report = {
   url: baseURL,
+  part,
   commit: process.env.QA_COMMIT,
   checks: [],
   screenshots: [],
@@ -33,7 +39,10 @@ const browser = await chromium.launch({
   ],
 })
 const context = await browser.newContext({
-  viewport: { width: 1487, height: 1058 },
+  viewport:
+    part === 'mobile'
+      ? { width: 393, height: 852 }
+      : { width: 1487, height: 1058 },
   deviceScaleFactor: 1,
   reducedMotion: 'reduce',
   hasTouch: true,
@@ -111,6 +120,12 @@ const works = [
 ]
 try {
   await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 120000 })
+  if (!includesPart('gallery')) {
+    await expectVisible(page.locator('.museum-shell'))
+    await page
+      .getByRole('combobox', { name: 'Rendering detail' })
+      .selectOption('standard')
+  }
   await check('Production page renders a real WebGL 2 museum', async () => {
     await ready()
     assert.match(await page.title(), /Daylight Museum/)
@@ -139,9 +154,14 @@ try {
       }
     })
     assert.equal(report.graphics.error, 0)
-    assert(report.graphics.width > 1000 && report.graphics.height > 500)
+    assert(
+      report.graphics.width >= (part === 'mobile' ? 393 : 1000) &&
+        report.graphics.height > 300
+    )
     assert.equal(await page.locator('vite-error-overlay').count(), 0)
-    await screenshot('desktop-overview')
+    await screenshot(
+      includesPart('gallery') ? 'desktop-overview' : `${part}-initial`
+    )
   })
   assert(
     report.checks[0]?.passed,
@@ -151,7 +171,9 @@ try {
     .getByRole('combobox', { name: 'Rendering detail' })
     .selectOption('standard')
   await ready()
-  report.renderingModes = 'High overview; Standard artwork controls and mobile'
+  report.renderingModes = includesPart('gallery')
+    ? 'High overview; Standard artwork controls and mobile'
+    : 'Standard'
   await check('All eight thumbnails and local fonts load', async () => {
     const loaded = await page
       .locator('.catalogue-thumb img')
@@ -169,22 +191,31 @@ try {
       )
     )
   })
-  await check(
-    'All works dialog, keyboard dismissal, and focus return',
-    async () => {
-      await button('All works').click()
-      await expectVisible(page.getByRole('dialog'))
-      assert.equal(await page.locator('.collection-grid > button').count(), 8)
-      await screenshot('desktop-all-works')
-      await page.keyboard.press('Escape')
-      assert(!(await page.getByRole('dialog').isVisible()))
-      assert.match(
-        await page.evaluate(() => document.activeElement.textContent),
-        /All works/
-      )
-    }
-  )
-  for (const [id, label] of works) {
+  if (includesPart('gallery'))
+    await check(
+      'All works dialog, keyboard dismissal, and focus return',
+      async () => {
+        await button('All works').click()
+        await expectVisible(page.getByRole('dialog'))
+        assert.equal(await page.locator('.collection-grid > button').count(), 8)
+        await screenshot('desktop-all-works')
+        await page.keyboard.press('Escape')
+        assert(!(await page.getByRole('dialog').isVisible()))
+        assert.match(
+          await page.evaluate(() => document.activeElement.textContent),
+          /All works/
+        )
+      }
+    )
+  const chosenWorks =
+    part === 'all'
+      ? works
+      : part === 'sculptures'
+        ? works.slice(0, 4)
+        : part === 'installations'
+          ? works.slice(4)
+          : []
+  for (const [id, label] of chosenWorks) {
     await check(
       `${label}: catalogue, inspector, controls, and original route`,
       async () => {
@@ -294,73 +325,86 @@ try {
       }
     )
   }
-  await check(
-    'Orbit drag and zoom respond without losing gallery navigation',
-    async () => {
-      await page.mouse.move(1000, 450)
-      await page.mouse.down()
-      await page.mouse.move(1100, 470, { steps: 12 })
-      await page.mouse.up()
-      await page.mouse.wheel(0, -240)
-      await page.waitForTimeout(700)
-      await screenshot('desktop-orbit')
-      await button('Gallery').click()
-    }
-  )
-  await check('Standard quality, restore High, and refresh', async () => {
-    await page
-      .getByRole('combobox', { name: 'Rendering detail' })
-      .selectOption('standard')
-    await ready()
-    await screenshot('desktop-standard')
-    await page
-      .getByRole('combobox', { name: 'Rendering detail' })
-      .selectOption('high')
-    await ready()
-    await page.reload({ waitUntil: 'domcontentloaded' })
-    await ready()
-    assert.equal(new URL(page.url()).pathname, '/third-time-charm/')
-  })
-  await check(
-    'Mobile viewport: collection, controls, navigation, and overflow',
-    async () => {
-      await page.setViewportSize({ width: 393, height: 852 })
+  if (includesPart('gallery'))
+    await check(
+      'Orbit drag and zoom respond without losing gallery navigation',
+      async () => {
+        await page.mouse.click(620, 402)
+        assert.equal(
+          new URL(page.url()).searchParams.get('work'),
+          'chromatic-gate'
+        )
+        await button('Back to gallery').click()
+        await page.mouse.move(1000, 450)
+        await page.mouse.down()
+        await page.mouse.move(1100, 470, { steps: 12 })
+        await page.mouse.up()
+        await page.mouse.wheel(0, -240)
+        await page.waitForTimeout(700)
+        await screenshot('desktop-orbit')
+        await button('Gallery').click()
+      }
+    )
+  if (includesPart('gallery'))
+    await check('Standard quality, restore High, and refresh', async () => {
+      await page
+        .getByRole('combobox', { name: 'Rendering detail' })
+        .selectOption('standard')
+      await ready()
+      await screenshot('desktop-standard')
+      await page
+        .getByRole('combobox', { name: 'Rendering detail' })
+        .selectOption('high')
+      await ready()
       await page.reload({ waitUntil: 'domcontentloaded' })
       await ready()
-      assert.equal(
+      assert.equal(new URL(page.url()).pathname, '/third-time-charm/')
+    })
+  if (includesPart('mobile'))
+    await check(
+      'Mobile viewport: collection, controls, navigation, and overflow',
+      async () => {
+        await page.setViewportSize({ width: 393, height: 852 })
+        await page.reload({ waitUntil: 'domcontentloaded' })
+        await ready()
+        assert.equal(
+          await page
+            .getByRole('combobox', { name: 'Rendering detail' })
+            .inputValue(),
+          'standard'
+        )
+        assert(
+          await page.evaluate(
+            () => document.documentElement.scrollWidth <= innerWidth
+          )
+        )
+        await screenshot('mobile-overview', true)
+        await button('08 Tech Constellation').click()
+        await button('Open experiment').click()
+        await expectVisible(
+          page.getByRole('textbox', { name: 'Find a company' })
+        )
         await page
-          .getByRole('combobox', { name: 'Rendering detail' })
-          .inputValue(),
-        'standard'
-      )
-      assert(
-        await page.evaluate(
-          () => document.documentElement.scrollWidth <= innerWidth
+          .getByRole('textbox', { name: 'Find a company' })
+          .fill('Apple')
+        await expectVisible(page.locator('.company-results button').first())
+        await screenshot('mobile-inspector', true)
+        await button('Close artwork controls').click()
+        await button('Open experiment').click()
+        await page.getByRole('textbox', { name: 'Find a company' }).focus()
+        await page.keyboard.press('Escape')
+        assert.equal(new URL(page.url()).search, '')
+        await button('All works').tap()
+        await expectVisible(page.getByRole('dialog'))
+        await screenshot('mobile-all-works', true)
+        await button('Close all works').click()
+        assert(
+          await page.evaluate(
+            () => document.documentElement.scrollWidth <= innerWidth
+          )
         )
-      )
-      await screenshot('mobile-overview', true)
-      await button('08 Tech Constellation').click()
-      await button('Open experiment').click()
-      await expectVisible(page.getByRole('textbox', { name: 'Find a company' }))
-      await page.getByRole('textbox', { name: 'Find a company' }).fill('Apple')
-      await expectVisible(page.locator('.company-results button').first())
-      await screenshot('mobile-inspector', true)
-      await button('Close artwork controls').click()
-      await button('Open experiment').click()
-      await page.getByRole('textbox', { name: 'Find a company' }).focus()
-      await page.keyboard.press('Escape')
-      assert.equal(new URL(page.url()).search, '')
-      await button('All works').tap()
-      await expectVisible(page.getByRole('dialog'))
-      await screenshot('mobile-all-works', true)
-      await button('Close all works').click()
-      assert(
-        await page.evaluate(
-          () => document.documentElement.scrollWidth <= innerWidth
-        )
-      )
-    }
-  )
+      }
+    )
   await check('No application or shader errors', async () => {
     const errors = report.issues.filter(
       (issue) =>
