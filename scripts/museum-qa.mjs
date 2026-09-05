@@ -33,6 +33,10 @@ const context = await browser.newContext({
 })
 const page = await context.newPage()
 page.setDefaultTimeout(20000)
+const pending = new Set()
+page.on('request', (request) => pending.add(request.url()))
+page.on('requestfinished', (request) => pending.delete(request.url()))
+page.on('requestfailed', (request) => pending.delete(request.url()))
 page.on('pageerror', (error) =>
   report.issues.push({ type: 'pageerror', text: error.message })
 )
@@ -72,6 +76,7 @@ const expectVisible = async (locator) => {
   assert(await locator.isVisible())
 }
 const ready = async () => {
+  await expectVisible(page.locator('.museum-shell'))
   await page
     .locator('.museum-loading')
     .waitFor({ state: 'hidden', timeout: 120000 })
@@ -95,7 +100,7 @@ const works = [
   ['techmap', '08 Tech Constellation'],
 ]
 try {
-  await page.goto(baseURL, { waitUntil: 'networkidle', timeout: 120000 })
+  await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 120000 })
   await check('Production page renders a real WebGL 2 museum', async () => {
     assert.match(await page.title(), /Daylight Museum/)
     await ready()
@@ -114,6 +119,10 @@ try {
     assert.equal(await page.locator('vite-error-overlay').count(), 0)
     await screenshot('desktop-overview')
   })
+  assert(
+    report.checks[0]?.passed,
+    'Cannot continue artwork QA until the room renders'
+  )
   await check('All eight thumbnails and local fonts load', async () => {
     const loaded = await page
       .locator('.catalogue-thumb img')
@@ -278,7 +287,7 @@ try {
       .getByRole('combobox', { name: 'Rendering detail' })
       .selectOption('high')
     await ready()
-    await page.reload({ waitUntil: 'networkidle' })
+    await page.reload({ waitUntil: 'domcontentloaded' })
     await ready()
     assert.equal(new URL(page.url()).pathname, '/third-time-charm/')
   })
@@ -286,7 +295,7 @@ try {
     'Mobile collection, controls, touch navigation, and overflow',
     async () => {
       await page.setViewportSize({ width: 393, height: 852 })
-      await page.reload({ waitUntil: 'networkidle' })
+      await page.reload({ waitUntil: 'domcontentloaded' })
       await ready()
       assert.equal(
         await page
@@ -327,7 +336,19 @@ try {
     )
     assert.deepEqual(errors, [])
   })
+} catch (error) {
+  report.checks.push({
+    name: 'Complete browser run',
+    passed: false,
+    error: error.message,
+  })
+  await screenshot('blocked-state').catch(() => {})
 } finally {
+  report.pendingRequests = [...pending]
+  report.pageText = await page
+    .locator('body')
+    .innerText()
+    .catch(() => '')
   report.passed =
     report.checks.length > 0 && report.checks.every((check) => check.passed)
   await fs.writeFile(
@@ -341,6 +362,8 @@ try {
         passed: report.passed,
         checks: report.checks,
         graphics: report.graphics,
+        pendingRequests: report.pendingRequests,
+        pageText: report.pageText,
         issues: report.issues,
       },
       null,
