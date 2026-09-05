@@ -283,13 +283,7 @@ export function Hoverboard({
   )
 }
 
-export function Gate({
-  materials,
-  controls,
-  active,
-  onControl,
-  reducedMotion,
-}) {
+export function Gate({ materials, controls, active, onControl }) {
   const arches = useRef([])
   const sculpture = useRef()
   useFrame((_, delta) => {
@@ -315,8 +309,7 @@ export function Gate({
         delta
       )
     })
-    if (controls.rotateGate && !reducedMotion)
-      sculpture.current.rotation.y += delta * 0.3
+    if (controls.rotateGate) sculpture.current.rotation.y += delta * 0.3
     else
       sculpture.current.rotation.y = THREE.MathUtils.damp(
         sculpture.current.rotation.y % (Math.PI * 2),

@@ -434,7 +434,11 @@ export default function Museum() {
       : selected
         ? 'preview'
         : 'gallery'
-  const [controls, setControls] = useState(initialControls)
+  const [controls, setControls] = useState(() => ({
+    ...initialControls,
+    constellationSpin: !window.matchMedia('(prefers-reduced-motion: reduce)')
+      .matches,
+  }))
   const [statuses, setStatuses] = useState({})
   const [companies, setCompanies] = useState([])
   const [allWorks, setAllWorks] = useState(false)

@@ -282,8 +282,8 @@ try {
               name.trim()
             )
           )
-          await button('Pause the constellation').click()
-          await expectVisible(button('Turn the constellation'))
+          await button('Turn the constellation').click()
+          await expectVisible(button('Pause the constellation'))
         }
         await page.waitForTimeout(
           id === 'hoverboard' || id === 'duck' ? 200 : 1300

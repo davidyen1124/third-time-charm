@@ -289,7 +289,7 @@ export function Constellation({
     return group
   }, [companies, selected])
   useFrame((_, delta) => {
-    if (controls.constellationSpin && !reducedMotion)
+    if (controls.constellationSpin && (!reducedMotion || active))
       rotation.current += delta * 0.18
   })
   return (
