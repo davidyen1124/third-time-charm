@@ -1,0 +1,66 @@
+name: Museum browser QA
+
+on:
+  push:
+    branches: ['feat/daylight-museum']
+  workflow_run:
+    workflows: ['Deploy static content to Pages']
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: museum-qa-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser:
+    if: github.event_name == 'push' || github.event.workflow_run.conclusion == 'success'
+    strategy:
+      fail-fast: false
+      matrix:
+        part: [gallery, sculptures, installations, mobile]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run lint && npm test && npm run build
+      - name: Install isolated browser test runtime
+        run: |
+          npm install --prefix "$RUNNER_TEMP/museum-browser" --no-package-lock playwright@1.51.1
+          node "$RUNNER_TEMP/museum-browser/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Start production preview
+        if: github.event_name == 'push'
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/museum-preview.log 2>&1 &
+          for attempt in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:4173/third-time-charm/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/museum-preview.log
+          exit 1
+      - name: Check museum and capture visual evidence
+        timeout-minutes: 14
+        env:
+          MUSEUM_QA_PART: ${{ matrix.part }}
+          PLAYWRIGHT_MODULE: ${{ runner.temp }}/museum-browser/node_modules/playwright
+          MUSEUM_QA_URL: ${{ github.event_name == 'workflow_run' && 'https://davidyen1124.github.io/third-time-charm/' || 'http://127.0.0.1:4173/third-time-charm/' }}
+          MUSEUM_QA_OUTPUT: museum-qa-results
+          QA_COMMIT: ${{ github.event.workflow_run.head_sha || github.sha }}
+        run: node scripts/museum-qa.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: museum-qa-${{ github.run_id }}-${{ matrix.part }}
+          path: museum-qa-results/
+          if-no-files-found: warn
+          retention-days: 30

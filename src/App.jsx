@@ -1,29 +1,47 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Suspense, lazy } from 'react'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Index from './pages/Index'
-import LockedIn from './pages/LockedIn'
-import Hoverboard from './pages/Hoverboard'
-import ChromaticGate from './pages/ChromaticGate'
-import CarPhysics from './pages/CarPhysics'
-import Duck from './pages/Duck'
-import Polaroid from './pages/Polaroid'
-import Conveyor from './pages/Conveyor'
-import Techmap from './pages/Techmap'
+
+const demos = {
+  lockedin: lazy(() => import('./pages/LockedIn')),
+  hoverboard: lazy(() => import('./pages/Hoverboard')),
+  'chromatic-gate': lazy(() => import('./pages/ChromaticGate')),
+  'car-physics': lazy(() => import('./pages/CarPhysics')),
+  duck: lazy(() => import('./pages/Duck')),
+  polaroid: lazy(() => import('./pages/Polaroid')),
+  conveyor: lazy(() => import('./pages/Conveyor')),
+  techmap: lazy(() => import('./pages/Techmap')),
+}
 
 function App() {
   return (
-    <Router basename="/third-time-charm">
+    <Router basename={import.meta.env.BASE_URL}>
       <div className="flex flex-col min-h-screen">
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/lockedin" element={<LockedIn />} />
-            <Route path="/hoverboard" element={<Hoverboard />} />
-            <Route path="/chromatic-gate" element={<ChromaticGate />} />
-            <Route path="/car-physics" element={<CarPhysics />} />
-            <Route path="/duck" element={<Duck />} />
-            <Route path="/polaroid" element={<Polaroid />} />
-            <Route path="/conveyor" element={<Conveyor />} />
-            <Route path="/techmap" element={<Techmap />} />
+            {Object.entries(demos).map(([path, Demo]) => (
+              <Route
+                key={path}
+                path={`/${path}`}
+                element={
+                  <>
+                    <Link className="legacy-gallery-link" to={`/?work=${path}`}>
+                      Back to the museum
+                    </Link>
+                    <Suspense
+                      fallback={
+                        <div className="legacy-loading">
+                          Opening the experiment…
+                        </div>
+                      }
+                    >
+                      <Demo />
+                    </Suspense>
+                  </>
+                }
+              />
+            ))}
           </Routes>
         </main>
       </div>

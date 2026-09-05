@@ -6,14 +6,15 @@
 
 The gallery used to yeet clicks to `github.io/lockedin` (and the rest of the demo roster) like the site lived at the domain root. Those are very confident 404s. It now remembers the `/third-time-charm` prefix, like a tourist who finally learned the hotel address.
 
-
 ### 🗂️ The Not-So-Grand Gallery [@third-time-charm/](https://davidyen1124.github.io/third-time-charm/)
 
-For those who want a guided tour of my questionable Three.js experiments, the gallery now whirls them around you in a flashy carousel. Because a plain grid was apparently too pedestrian.
+The gallery has moved into a sunlit limestone museum. Apparently the rotating screenshot ring finally got an architecture budget. All eight exhibits are now real, interactive Three.js objects: open the cage, kickflip the hoverboard, spread the rainbow gates, launch colliding cars, disturb the ducks, spotlight photographs, scan groceries, and explore a company constellation. The catalogue keeps every work within reach, because even an expensive-looking museum should have signs. Original experiments remain accessible from each artwork, with a return link that mercifully remembers the museum exists.
 
-By the way, the thumbnails now come from local files, because waiting on GitHub to deliver them felt slower than my Monday brain.
-Now they're stashed in `.github/assets` because even images need their own secret clubhouse.
-The conveyor screenshot finally clocked in, so the carousel is now a full house.
+The new gallery lives in `src/museum/`. Select a piece, then choose **Open experiment** for its controls. Drag to orbit, scroll or pinch to zoom, and use **Back to gallery** to return to the room. Keyboard users can reach every work and control; arrow keys browse works when a control is not focused, and Escape returns to the overview. **All works** opens the complete collection. On mobile, the catalogue becomes two columns. **Detail: Standard** reduces rendering cost by disabling the floor's planar reflection and lowering the pixel ratio. The room uses local material textures, local font files, and a locally cached duck model; asset credits are in `docs/museum-assets.md`.
+
+The catalogue thumbnails are compressed local copies of the original screenshots in `.github/assets`. Even the souvenir shop would struggle to charge extra for that loading time.
+
+Run `npm ci` and `npm run dev` to open the museum at `/third-time-charm/`. Run `npm test` for the scene interaction checks and `npm run build` for the production bundle. The gallery requires WebGL 2; when it is unavailable, the complete catalogue and original-demo links remain usable. See `design-qa.md` for the current validation status and remaining visual checks.
 
 ### 🔒 The Pink Prisoner [@third-time-charm/lockedin](https://davidyen1124.github.io/third-time-charm/lockedin)
 
