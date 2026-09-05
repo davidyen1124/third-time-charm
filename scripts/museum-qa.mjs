@@ -330,6 +330,9 @@ try {
       'Orbit drag and zoom respond without losing gallery navigation',
       async () => {
         await page.mouse.click(620, 402)
+        await page.waitForURL(
+          (url) => url.searchParams.get('work') === 'chromatic-gate'
+        )
         assert.equal(
           new URL(page.url()).searchParams.get('work'),
           'chromatic-gate'
@@ -397,6 +400,16 @@ try {
         await button('All works').tap()
         await expectVisible(page.getByRole('dialog'))
         await screenshot('mobile-all-works', true)
+        assert.equal(await page.locator('.collection-grid > button').count(), 8)
+        const lastWork = page.locator('.collection-grid > button').last()
+        await lastWork.scrollIntoViewIfNeeded()
+        await screenshot('mobile-collection-end', true)
+        await lastWork.tap()
+        await page.waitForURL(
+          (url) => url.searchParams.get('work') === 'techmap'
+        )
+        assert(!(await page.getByRole('dialog').isVisible()))
+        await button('All works').tap()
         await button('Close all works').click()
         assert(
           await page.evaluate(

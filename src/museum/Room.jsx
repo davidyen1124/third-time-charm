@@ -282,7 +282,6 @@ export default function Room({ materials, quality }) {
       <Plant materials={materials} position={[-9.55, 0, 1.2]} scale={1.32} />
       <Plant materials={materials} position={[-4.3, 0, -5.5]} scale={0.76} />
       <Plant materials={materials} position={[11.05, 0, 3.9]} scale={1.28} />
-      <Plant materials={materials} position={[10.9, 0, -4.8]} scale={1.08} />
       <group position={[-4.4, 0, 6.0]} rotation={[0, 0.12, 0]}>
         <Box
           size={[3.3, 0.18, 0.85]}
