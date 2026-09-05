@@ -516,17 +516,25 @@ export default function Museum() {
   }
   useEffect(() => {
     if (mode === 'inspect') focusHeading.current?.focus({ preventScroll: true })
-  }, [mode])
+    if (mode !== 'gallery' && window.matchMedia('(max-width: 700px)').matches)
+      window.scrollTo({
+        top: 0,
+        behavior: reducedMotion ? 'instant' : 'smooth',
+      })
+  }, [mode, reducedMotion])
   useEffect(() => {
     const keydown = (e) => {
+      if (allWorks) return
+      if (e.key === 'Escape') {
+        overview()
+        return
+      }
       if (
-        allWorks ||
         e.target.closest(
           'input, button, a, select, textarea, [contenteditable]'
         )
       )
         return
-      if (e.key === 'Escape') overview()
       if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
         e.preventDefault()
         const index = collection.indexOf(work)
@@ -604,7 +612,7 @@ export default function Museum() {
             >
               Gallery
             </button>
-            <button onClick={() => setAllWorks(true)}>
+            <button aria-label="All works" onClick={() => setAllWorks(true)}>
               All works<span className="nav-count">08</span>
             </button>
           </nav>

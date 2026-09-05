@@ -20,8 +20,8 @@ const pieces = [
   Conveyor,
   Constellation,
 ]
-const overviewPosition = new THREE.Vector3(9.1, 6.3, 18.5)
-const overviewTarget = new THREE.Vector3(0, 2.45, -0.8)
+const overviewPosition = new THREE.Vector3(2, 4.2, 12.5)
+const overviewTarget = new THREE.Vector3(0, 2.5, -0.8)
 
 function GalleryCamera({ work, mode, reducedMotion }) {
   const orbit = useRef()
@@ -34,7 +34,7 @@ function GalleryCamera({ work, mode, reducedMotion }) {
     if (mode === 'gallery' || mode === 'catalogue') {
       target.current.copy(overviewTarget)
       position.current.copy(overviewPosition)
-      if (mobile) position.current.set(13.5, 9, 30)
+      if (mobile) position.current.set(2, 7.6, 29)
     } else {
       target.current.fromArray(work.target)
       position.current.fromArray(work.camera)
@@ -158,8 +158,8 @@ function Scene({
     <>
       <color attach="background" args={['#e6e1d5']} />
       <fog attach="fog" args={['#e6e1d5', 42, 75]} />
-      <ambientLight intensity={0.4} color="#fff8eb" />
-      <hemisphereLight args={['#e5efff', '#bc9d75', 1.0]} />
+      <ambientLight intensity={0.3} color="#fff8eb" />
+      <hemisphereLight args={['#e5efff', '#bc9d75', 0.75]} />
       <directionalLight
         position={[-8, 15, 9]}
         target={sunTarget}
@@ -167,8 +167,8 @@ function Scene({
         color="#fff1d7"
         castShadow
         shadow-mapSize={[
-          quality === 'high' ? 4096 : 2048,
-          quality === 'high' ? 4096 : 2048,
+          quality === 'high' ? 2048 : 1024,
+          quality === 'high' ? 2048 : 1024,
         ]}
         shadow-camera-left={-17}
         shadow-camera-right={17}

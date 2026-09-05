@@ -14,6 +14,7 @@ export function Box({
       args={size}
       radius={Math.min(radius, Math.min(...size) / 3)}
       smoothness={2}
+      bevelSegments={2}
       castShadow
       receiveShadow
       {...props}
@@ -32,6 +33,7 @@ export function Label({ children, size = 0.17, color = '#4d473c', ...props }) {
     <Text
       font={asset('fonts/caslon.ttf')}
       fontSize={size}
+      gpuAccelerateSDF={false}
       color={color}
       anchorX="center"
       anchorY="middle"

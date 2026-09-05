@@ -64,7 +64,7 @@
 .museum-stage {
   position: relative;
   flex: 1;
-  height: calc(100svh - 222px);
+  height: calc(100svh - 284px);
   min-height: 550px;
   overflow: hidden;
   background: #e6e1d5;
@@ -99,8 +99,8 @@
 .museum-brand h1 {
   margin: 0;
   font-family: 'Museum Caslon', Georgia, serif;
-  font-weight: 400;
-  font-size: clamp(40px, 4.45vw, 72px);
+  font-weight: 600;
+  font-size: clamp(40px, 4.15vw, 66px);
   letter-spacing: -0.025em;
   line-height: 0.96;
 }
@@ -245,7 +245,7 @@
   border-bottom: 1px solid var(--line);
   background: transparent;
   padding: 17px 23px;
-  min-height: 93px;
+  min-height: 116px;
   text-align: left;
   position: relative;
   color: var(--ink);
@@ -261,7 +261,7 @@
 }
 .catalogue-work:not(:nth-child(4n))::after {
   content: '';
-  height: 54px;
+  height: 68px;
   width: 1px;
   right: 0;
   background: var(--line);
@@ -269,8 +269,8 @@
   top: 20px;
 }
 .catalogue-thumb {
-  height: 61px;
-  width: 82px;
+  height: 81px;
+  width: 108px;
   flex-shrink: 0;
   background: #d5d0c4;
   overflow: hidden;
@@ -949,6 +949,29 @@
     width: 260px;
     max-height: 52%;
     padding: 16px 18px 12px;
+  }
+  .is-inspecting .museum-stage {
+    --inspection-height: max(390px, 55svh);
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+    padding-top: var(--inspection-height);
+  }
+  .is-inspecting .museum-canvas {
+    height: var(--inspection-height);
+    bottom: auto;
+  }
+  .is-inspecting .artwork-panel {
+    position: relative;
+    inset: auto;
+    width: auto;
+    max-height: none;
+    margin: 0 14px 18px;
+  }
+  .is-inspecting .museum-scene-tools {
+    top: calc(var(--inspection-height) - 43px);
+    bottom: auto;
   }
   .artwork-panel h2 {
     font-size: 29px;

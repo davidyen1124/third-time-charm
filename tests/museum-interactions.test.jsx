@@ -82,9 +82,9 @@ async function mount(Exhibit, overrides = {}) {
     controls = { ...controls, ...values }
     await renderer.update(node())
   }
-  const frames = async (count = 60) => {
+  const frames = async (count = 60, delta = 1 / 60) => {
     await act(async () => {
-      for (let i = 0; i < count; i++) await renderer.advanceFrames(1, 1 / 60)
+      for (let i = 0; i < count; i++) await renderer.advanceFrames(1, delta)
     })
   }
   const object = (name) => renderer.scene.findByProps({ name }).instance
@@ -180,6 +180,14 @@ describe('The complete museum', () => {
     await scene.frames(1)
     expect(scene.object('car-0').position.x).toBeCloseTo(-0.85)
     expect(scene.object('car-0').position.z).toBeCloseTo(-0.75)
+    scene.onStatus.mockClear()
+    await scene.update({ launch: 2 })
+    await scene.frames(4, 0.25)
+    expect(
+      scene.onStatus.mock.calls.some(([, value]) =>
+        /^[1-9]\d* collisions$/.test(value)
+      )
+    ).toBe(true)
   })
 
   it('creates water ripples and makes individual ducks hop', async () => {

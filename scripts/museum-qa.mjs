@@ -17,6 +17,12 @@ const report = {
   screenshots: [],
   issues: [],
 }
+const checkpoint = async () => {
+  await fs.writeFile(
+    path.join(output, 'report.json'),
+    JSON.stringify(report, null, 2)
+  )
+}
 const browser = await chromium.launch({
   headless: true,
   args: [
@@ -30,9 +36,11 @@ const context = await browser.newContext({
   viewport: { width: 1487, height: 1058 },
   deviceScaleFactor: 1,
   reducedMotion: 'reduce',
+  hasTouch: true,
 })
 const page = await context.newPage()
 page.setDefaultTimeout(20000)
+page.setDefaultNavigationTimeout(120000)
 const pending = new Set()
 page.on('request', (request) => pending.add(request.url()))
 page.on('requestfinished', (request) => pending.delete(request.url()))
@@ -59,6 +67,7 @@ const screenshot = async (name, fullPage = false) => {
     timeout: 60000,
   })
   report.screenshots.push(name)
+  await checkpoint()
 }
 const check = async (name, action) => {
   try {
@@ -70,6 +79,7 @@ const check = async (name, action) => {
     console.error(`FAIL ${name}: ${error.message}`)
     await screenshot(`failure-${report.checks.length}`).catch(() => {})
   }
+  await checkpoint()
 }
 const expectVisible = async (locator) => {
   await locator.waitFor({ state: 'visible' })
@@ -102,8 +112,22 @@ const works = [
 try {
   await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 120000 })
   await check('Production page renders a real WebGL 2 museum', async () => {
-    assert.match(await page.title(), /Daylight Museum/)
     await ready()
+    assert.match(await page.title(), /Daylight Museum/)
+    const buildHTML = await fs.readFile('dist/index.html', 'utf8')
+    const expectedEntry = buildHTML.match(
+      /type="module"[^>]+src="([^"]+)"/
+    )?.[1]
+    assert(expectedEntry, 'Built entry module is missing')
+    const actualEntry = await page
+      .locator('script[type="module"][src]')
+      .getAttribute('src')
+    assert.equal(
+      actualEntry,
+      expectedEntry,
+      'The browser must load the tested build'
+    )
+    report.entryModule = actualEntry
     report.graphics = await page.locator('canvas').evaluate((canvas) => {
       const gl = canvas.getContext('webgl2'),
         info = gl.getExtension('WEBGL_debug_renderer_info')
@@ -123,6 +147,11 @@ try {
     report.checks[0]?.passed,
     'Cannot continue artwork QA until the room renders'
   )
+  await page
+    .getByRole('combobox', { name: 'Rendering detail' })
+    .selectOption('standard')
+  await ready()
+  report.renderingModes = 'High overview; Standard artwork controls and mobile'
   await check('All eight thumbnails and local fonts load', async () => {
     const loaded = await page
       .locator('.catalogue-thumb img')
@@ -201,7 +230,8 @@ try {
               /[1-9]\d* collisions/.test(
                 document.querySelector('.interaction-feedback')?.textContent
               ),
-            { timeout: 20000 }
+            undefined,
+            { timeout: 30000 }
           )
         } else if (id === 'duck') {
           await button('Make a ripple').click()
@@ -292,7 +322,7 @@ try {
     assert.equal(new URL(page.url()).pathname, '/third-time-charm/')
   })
   await check(
-    'Mobile collection, controls, touch navigation, and overflow',
+    'Mobile viewport: collection, controls, navigation, and overflow',
     async () => {
       await page.setViewportSize({ width: 393, height: 852 })
       await page.reload({ waitUntil: 'domcontentloaded' })
@@ -316,7 +346,11 @@ try {
       await expectVisible(page.locator('.company-results button').first())
       await screenshot('mobile-inspector', true)
       await button('Close artwork controls').click()
-      await button('All works').click()
+      await button('Open experiment').click()
+      await page.getByRole('textbox', { name: 'Find a company' }).focus()
+      await page.keyboard.press('Escape')
+      assert.equal(new URL(page.url()).search, '')
+      await button('All works').tap()
       await expectVisible(page.getByRole('dialog'))
       await screenshot('mobile-all-works', true)
       await button('Close all works').click()
@@ -355,7 +389,6 @@ try {
     path.join(output, 'report.json'),
     JSON.stringify(report, null, 2)
   )
-  await browser.close()
   console.log(
     JSON.stringify(
       {
@@ -370,5 +403,9 @@ try {
       2
     )
   )
+  await Promise.race([
+    browser.close(),
+    new Promise((resolve) => setTimeout(resolve, 10000)),
+  ])
 }
-if (!report.passed) process.exitCode = 1
+process.exit(report.passed ? 0 : 1)

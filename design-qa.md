@@ -2,7 +2,22 @@
 
 **final result: blocked**
 
-The eight interactive Three.js exhibits are implemented and their scene behavior tests pass. The available cloud browser disables WebGL, so the actual room, shaders, shadows, camera composition, visual fidelity, and device performance could not be verified. This is a draft implementation, not a visually approved release.
+A Chromium WebGL 2 run now renders the museum successfully. The first GPU comparison found floor reflection artifacts, an obstructed car inspection camera, an overly distant overview, and mobile controls covering the artwork. Fixes are implemented and awaiting a second rendered comparison. The release remains blocked until that comparison and the complete browser checks pass.
+
+## WebGL QA iteration — 5 September 2026
+
+- Chromium 134 / ANGLE SwiftShader, 1487 × 1058 CSS pixels and screenshot pixels, device scale 1. The selected reference is also 1487 × 1058; both were opened together for comparison.
+- Evidence: [browser run 33986571221](https://github.com/davidyen1124/third-time-charm/actions/runs/33986571221), artifact `museum-qa-33986571221`, including `desktop-overview.png`, eight inspection views, and 393-pixel mobile views.
+- The run passed actual WebGL rendering, all eight local thumbnails, local fonts, the collection dialog, seven artwork control checks, orbit navigation, and the absence of application/shader errors.
+- Car collision feedback timed out at 20 seconds on the software renderer; physics now integrates delayed frames in bounded small steps. A regression check verifies collisions at four frames per second.
+- The car camera was hidden by the cage. The car and hoverboard displays have been repositioned and their inspection cameras moved into clear sight lines.
+- Black blocks appeared in the reflective floor. The reflection now uses a simpler blur without the depth-dependent pass or bump derivative, and the reflection/shadow resolutions are reduced.
+- The room was framed too far away. The overview camera is closer and lower; the catalogue thumbnails and rows now better match the reference proportions. These are proposed fixes, not yet visually approved.
+- Mobile inspection controls obscured the artwork. They now flow below the canvas with no nested scrolling. Selection scrolls the artwork into view. The All works button now has a stable accessible name that excludes its decorative count.
+- Escape now returns to the gallery even when a control has keyboard focus.
+- Browser QA now captures High-quality overview evidence, checks artwork controls in Standard mode, retains progress on failure, waits longer for navigation on the software renderer, and verifies the loaded entry module against the production build.
+
+The earlier cloud-browser findings below are retained as history; WebGL availability itself is no longer the blocker.
 
 ## Evidence and comparison state
 

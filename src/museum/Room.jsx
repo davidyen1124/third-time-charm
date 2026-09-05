@@ -99,20 +99,15 @@ export default function Room({ materials, quality }) {
         <planeGeometry args={[34, 34]} />
         {quality === 'high' ? (
           <MeshReflectorMaterial
-            resolution={512}
-            blur={[240, 80]}
+            resolution={256}
+            blur={[80, 30]}
             mixBlur={1}
-            mixStrength={0.62}
-            roughness={0.68}
+            mixStrength={1.2}
+            roughness={0.42}
             metalness={0.18}
             map={materials.floorMap}
-            bumpMap={materials.floorMap}
-            bumpScale={0.014}
             color="#dfd3bb"
-            mirror={0.2}
-            depthScale={0.15}
-            minDepthThreshold={0.8}
-            maxDepthThreshold={1.2}
+            mirror={0.25}
           />
         ) : (
           <meshStandardMaterial
@@ -275,7 +270,7 @@ export default function Room({ materials, quality }) {
         {'Interactive 3D\nExperiences for\na More Playful Internet.'}
       </Label>
       <Label
-        position={[4.7, 3.9, -6.145]}
+        position={[6.5, 3.9, -6.145]}
         anchorX="center"
         size={0.21}
         lineHeight={1.28}

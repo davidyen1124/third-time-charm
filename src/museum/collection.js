@@ -31,9 +31,9 @@ export const collection = [
     description: 'A small rebellion against gravity.',
     instructions:
       'Tilt the board or send it into a kickflip. The rider is optimistic.',
-    position: [-4.4, 0, -3.7],
-    target: [-4.4, 2.0, -3.7],
-    camera: [-1.3, 3.3, 2.8],
+    position: [-6.3, 0, -3.7],
+    target: [-6.3, 2.3, -3.7],
+    camera: [-4.9, 3.3, -0.8],
   },
   {
     id: 'chromatic-gate',
@@ -57,9 +57,9 @@ export const collection = [
     description: 'Four cars. Several questionable decisions.',
     instructions:
       'Launch the cars and watch them collide. Tap a car to give it a nudge.',
-    position: [-8, 0, -3.7],
-    target: [-8, 1.8, -3.7],
-    camera: [-4.7, 5.7, 2.2],
+    position: [-3.3, 0, -3.7],
+    target: [-3.3, 1.2, -3.7],
+    camera: [-3.3, 5.1, -0.8],
   },
   {
     id: 'duck',
@@ -83,9 +83,9 @@ export const collection = [
     description: 'Little moments, brought into the light.',
     instructions:
       'Move across the photographs to guide the light. Select a print to bring it closer.',
-    position: [1.8, 0, -5.65],
-    target: [1.8, 3.0, -5.65],
-    camera: [2.6, 3.3, 1.4],
+    position: [3.8, 0, -5.65],
+    target: [3.8, 3.0, -5.65],
+    camera: [4.1, 3.3, 1.4],
   },
   {
     id: 'conveyor',
@@ -96,9 +96,9 @@ export const collection = [
     description: 'The surprisingly satisfying art of checking out.',
     instructions:
       'Change the belt speed. Tap an item to scan it, or let the scanner do its thing.',
-    position: [4.1, 0, -3.9],
-    target: [4.1, 1.55, -3.9],
-    camera: [7.2, 4.0, 2.8],
+    position: [6.5, 0, -3.9],
+    target: [6.5, 1.55, -3.9],
+    camera: [8, 4.0, 1.2],
   },
   {
     id: 'techmap',
@@ -109,9 +109,9 @@ export const collection = [
     description: 'A universe of companies, connected by curiosity.',
     instructions:
       'Select a company to learn its story. Search the collection or turn the constellation.',
-    position: [7.6, 0, -5.65],
-    target: [7.6, 3.1, -5.65],
-    camera: [7.9, 3.4, 1.9],
+    position: [9.5, 0, -5.65],
+    target: [9.5, 3.1, -5.65],
+    camera: [9.5, 3.4, 1.9],
   },
 ]
 

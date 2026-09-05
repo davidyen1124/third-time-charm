@@ -463,47 +463,55 @@ export function Cars({ materials, controls, active, onStatus }) {
         c.vz = -Math.sign(c.z || origins[i][1]) * (1.1 + i * 0.13)
       })
     }
-    const dt = Math.min(delta, 0.033)
-    cars.forEach((c) => {
-      c.x += c.vx * dt
-      c.z += c.vz * dt
-      if (Math.abs(c.x) > 1.08) {
-        c.x = Math.sign(c.x) * 1.08
-        c.vx *= -0.9
-      }
-      if (Math.abs(c.z) > 0.94) {
-        c.z = Math.sign(c.z) * 0.94
-        c.vz *= -0.9
-      }
-      c.vx *= Math.exp(-dt * 0.055)
-      c.vz *= Math.exp(-dt * 0.055)
-    })
-    for (let i = 0; i < cars.length; i++)
-      for (let j = i + 1; j < cars.length; j++) {
-        const a = cars[i],
-          b = cars[j]
-        const dx = b.x - a.x,
-          dz = b.z - a.z
-        const distance = Math.hypot(dx, dz)
-        if (distance < 0.46 && distance > 0) {
-          const nx = dx / distance,
-            nz = dz / distance
-          const closingSpeed = (a.vx - b.vx) * nx + (a.vz - b.vz) * nz
-          if (closingSpeed > 0) {
-            a.vx -= closingSpeed * nx
-            a.vz -= closingSpeed * nz
-            b.vx += closingSpeed * nx
-            b.vz += closingSpeed * nz
-            collisions.current++
-            if (active) onStatus('cars', `${collisions.current} collisions`)
-          }
-          const separation = (0.46 - distance) / 2
-          a.x -= nx * separation
-          a.z -= nz * separation
-          b.x += nx * separation
-          b.z += nz * separation
+    // Integrate delayed frames in small steps so collisions stay stable and
+    // the simulation does not slow to a crawl on a lower-powered renderer.
+    const elapsed = Math.min(delta, 0.25)
+    const steps = Math.max(1, Math.ceil(elapsed / (1 / 120)))
+    const dt = elapsed / steps
+    const previousCollisions = collisions.current
+    for (let step = 0; step < steps; step++) {
+      cars.forEach((c) => {
+        c.x += c.vx * dt
+        c.z += c.vz * dt
+        if (Math.abs(c.x) > 1.08) {
+          c.x = Math.sign(c.x) * 1.08
+          c.vx *= -0.9
         }
-      }
+        if (Math.abs(c.z) > 0.94) {
+          c.z = Math.sign(c.z) * 0.94
+          c.vz *= -0.9
+        }
+        c.vx *= Math.exp(-dt * 0.055)
+        c.vz *= Math.exp(-dt * 0.055)
+      })
+      for (let i = 0; i < cars.length; i++)
+        for (let j = i + 1; j < cars.length; j++) {
+          const a = cars[i],
+            b = cars[j]
+          const dx = b.x - a.x,
+            dz = b.z - a.z
+          const distance = Math.hypot(dx, dz)
+          if (distance < 0.46 && distance > 0) {
+            const nx = dx / distance,
+              nz = dz / distance
+            const closingSpeed = (a.vx - b.vx) * nx + (a.vz - b.vz) * nz
+            if (closingSpeed > 0) {
+              a.vx -= closingSpeed * nx
+              a.vz -= closingSpeed * nz
+              b.vx += closingSpeed * nx
+              b.vz += closingSpeed * nz
+              collisions.current++
+            }
+            const separation = (0.46 - distance) / 2
+            a.x -= nx * separation
+            a.z -= nz * separation
+            b.x += nx * separation
+            b.z += nz * separation
+          }
+        }
+    }
+    if (active && collisions.current !== previousCollisions)
+      onStatus('cars', `${collisions.current} collisions`)
     cars.forEach((c, i) => {
       const mesh = refs.current[i]
       if (!mesh) return

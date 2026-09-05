@@ -45,6 +45,7 @@ jobs:
           cat /tmp/museum-preview.log
           exit 1
       - name: Check museum and capture visual evidence
+        timeout-minutes: 14
         env:
           PLAYWRIGHT_MODULE: ${{ runner.temp }}/museum-browser/node_modules/playwright
           MUSEUM_QA_URL: ${{ github.event_name == 'workflow_run' && 'https://davidyen1124.github.io/third-time-charm/' || 'http://127.0.0.1:4173/third-time-charm/' }}
